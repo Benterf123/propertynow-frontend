@@ -7,7 +7,7 @@
     </header>
     <div class="relative">
       <div
-        class="absolute shadow-xl shadow-black/5 left-1/2 mx-auto grid w-max -translate-x-1/2 -translate-y-1/2 grid-cols-3 items-center gap-x-4 rounded-lg bg-white/80 p-6 backdrop-blur-md"
+        class="absolute left-1/2 mx-auto grid w-max -translate-x-1/2 -translate-y-1/2 grid-cols-3 items-center gap-x-4 rounded-lg bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur-md"
       >
         <div>
           <p class="flex gap-x-2">
@@ -30,16 +30,31 @@
       </div>
     </div>
     <main class="bg-primary/0">
-      <div class="c-container p-3 pt-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <div v-for="property of properties" :key="`property-${property.id}`">
-          <div class="h-48 relative rounded-lg p-3 bg-gradient-to-b from-transparent from-40% to-primary/30">
-            <img class="h-full w-[calc(100%-4*0.25rem)] absolute left-1/2 -translate-y-6 -translate-x-1/2 object-cover shadow-lg rounded-lg" :src="property.image" :alt="property.name" />
+      <div class="c-container pt-24">
+        <div
+          v-if="apiHandle.isError.value"
+          class="error mx-auto mb-3 w-max bg-red-50 first-letter:capitalize"
+        >
+          <p>{{ apiMsg }}</p>
+          <button class="btn mt-4" @click="getProperties">Retry</button>
+        </div>
+        <div v-else class="c-container grid grid-cols-2 p-3 pt-24 md:grid-cols-3 lg:grid-cols-4">
+          <div v-for="property of properties" :key="`property-${property.id}`">
+            <div
+              class="relative h-48 rounded-lg bg-gradient-to-b from-transparent from-40% to-primary/30 p-3"
+            >
+              <img
+                class="absolute left-1/2 h-full w-[calc(100%-4*0.25rem)] -translate-x-1/2 -translate-y-6 rounded-lg object-cover shadow-lg"
+                :src="property.image"
+                :alt="property.title"
+              />
+            </div>
+            <div class="mt-2">
+              <p class="text-lg opacity-60">{{ property.title }}</p>
+              <p>{{ property.price }}</p>
+              <button class="btn">Buy</button>
+            </div>
           </div>
-					<div class="mt-2">
-						<p class="opacity-60 text-lg">{{ property.name }}</p>
-						<p>{{ property.price }}</p>
-						<button class="btn">Buy</button>
-					</div>
         </div>
       </div>
     </main>
@@ -47,17 +62,24 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+
+import { usePropertiesStore } from '../store'
+import { useApiHandle } from '@/core/api/composables'
+
+const store = usePropertiesStore()
+const { propertiesApiStatus: apiStatus, propertiesApiMsg: apiMsg, properties } = storeToRefs(store)
+const apiHandle = useApiHandle(apiStatus)
+
+getProperties()
+function getProperties() {
+  store.retrieveAll({
+    page: 1,
+    limit: 100
+  })
+}
 
 const selectedCity = 'Kigali'
 const selectedPrice = '$5000'
-
-const properties = [
-  {
-    id: 1,
-    image: 'https://picsum.photos/500/300',
-    name: 'Sugushu Topi',
-    price: '$300'
-  }
-]
 </script>
