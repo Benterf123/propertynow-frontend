@@ -17,26 +17,10 @@
         leave-to-class="opacity-0 scale-95"
       >
         <div v-if="isLogin" class="flex h-full flex-col p-3">
-          <h1 class="text-center text-2xl">Login</h1>
-          <form @submit.prevent="login" class="mt-6 space-y-2">
-            <FormInputField label="Email" class="dark" :field="email" />
-            <FormInputField label="Password" type="password" class="dark" :field="password" />
-            <button class="btn !mt-6 block w-full">Login</button>
-          </form>
-          <button class="mt-auto text-center text-primary" @click="gotoSignup">
-            Signup Instead
-          </button>
+          <Login @goto-signup="isLogin = false" />
         </div>
         <div v-else class="flex h-full flex-col p-3">
-          <h1 class="text-center text-2xl">Create Account</h1>
-          <form @submit.prevent="login" class="mt-6 space-y-2">
-            <FormInputField label="Email" class="dark" :field="email" />
-            <FormInputField label="Password" type="password" class="dark" :field="password" />
-            <button class="btn !mt-6 block w-full">Signup</button>
-          </form>
-          <button class="mt-auto text-center text-primary" @click="gotoLogin">
-						Login Instead
-          </button>
+					<Signup @goto-login="isLogin = true" />
         </div>
       </Transition>
     </div>
@@ -44,31 +28,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, Transition } from 'vue'
-import { storeToRefs } from 'pinia'
+import { ref, Transition } from 'vue'
 
-import { Form, FormField } from '@/core/forms'
-import { Validators } from '@/core/forms/validators'
-
-import { FormInputField } from '@/features/common/components'
-
-const form = new Form({
-  email: new FormField(null, [[Validators.required, 'Email is required']]),
-  password: new FormField(null, [[Validators.required, 'Password is required']])
-})
+import Login from './components/Login.vue'
+import Signup from './components/Signup.vue'
 
 const isLogin = ref(true)
-function gotoLogin() {
-  isLogin.value = true
-}
-function gotoSignup() {
-  isLogin.value = false
-}
-
-async function login() {
-  console.log('Login')
-}
-
-const email = computed(() => form.getField<string>('email')!)
-const password = computed(() => form.getField<string>('password')!)
 </script>
