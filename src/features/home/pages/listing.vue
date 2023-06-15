@@ -21,9 +21,12 @@
             Price
             <ChevronDownIcon class="h-6 w-6" />
           </p>
-          <p class="opacity-60">{{ selectedPrice }}</p>
+          <div class="flex gap-x-1">
+						<InputField v-model="minPrice" name="minPrice" placeholder="min" class="w-20" />
+						<InputField v-model="maxPrice" name="maxPrice" placeholder="max" class="w-20" />
+          </div>
         </div>
-        <button class="btn flex items-center gap-x-3 !px-4 !py-3">
+        <button class="btn flex items-center gap-x-3 !px-4 !py-3" @click="getProperties">
           <MagnifyingGlassIcon class="h-6 w-6" />
           Search
         </button>
@@ -62,21 +65,27 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 import { usePropertiesStore } from '../store'
 import { useApiHandle } from '@/core/api/composables'
+import { InputField } from '@/features/common/components'
 
 const store = usePropertiesStore()
 const { propertiesApiStatus: apiStatus, propertiesApiMsg: apiMsg, properties } = storeToRefs(store)
 const apiHandle = useApiHandle(apiStatus)
 
+const minPrice = ref(100)
+const maxPrice = ref(10000)
+
 getProperties()
 function getProperties() {
   store.retrieveAll({
     page: 1,
-    limit: 100
+    limit: 100,
+
   })
 }
 
