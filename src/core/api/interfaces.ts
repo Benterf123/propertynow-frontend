@@ -18,12 +18,6 @@ export interface IApiRequestParams {
   [propName: string]: any;
 }
 
-export interface IApiResponseData<T> {
-  status: string;
-  message: string;
-  data?: T;
-}
-
 export interface IApiResponse<T = unknown> extends AxiosResponse {
-  data: IApiResponseData<T>;
+	data: T
 }

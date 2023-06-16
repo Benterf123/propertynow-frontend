@@ -6,14 +6,7 @@ export interface ILoginPayload {
 }
 
 export interface ILoginApiResponse extends IApiResponse {
-  data: {
-    status: string
-    message: string
-    data: {
-      accessToken: string
-      refreshToken: string
-    }
-  }
+  data: { access_token: string }
 }
 
 export interface ISignupPayload {
