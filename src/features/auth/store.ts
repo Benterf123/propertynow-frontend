@@ -46,7 +46,7 @@ export const useAuthStore = defineStore('auth-store', {
 				this.signupApiMsg = ''
 				this.signupApiStatus = IApiRequestStatus.Loading;
 
-				const response = await authService.login(payload)
+				const response = await authService.signup(payload)
 
 				this.signupApiStatus = IApiRequestStatus.Success
 			} catch (e) {

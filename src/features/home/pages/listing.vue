@@ -22,8 +22,8 @@
             <ChevronDownIcon class="h-6 w-6" />
           </p>
           <div class="flex gap-x-1">
-						<InputField v-model="minPrice" name="minPrice" placeholder="min" class="w-20" />
-						<InputField v-model="maxPrice" name="maxPrice" placeholder="max" class="w-20" />
+            <InputField v-model="minPrice" name="minPrice" placeholder="min" class="w-20" />
+            <InputField v-model="maxPrice" name="maxPrice" placeholder="max" class="w-20" />
           </div>
         </div>
         <button class="btn flex items-center gap-x-3 !px-4 !py-3" @click="getProperties">
@@ -36,7 +36,7 @@
       <div class="c-container pt-24">
         <div
           v-if="apiHandle.isError.value"
-          class="error mx-auto mb-3 w-max bg-red-50 first-letter:capitalize"
+          class="error mx-auto mb-3 w-max bg-red-50 first-letter:capitalize md:max-w-[580px]"
         >
           <p>{{ apiMsg }}</p>
           <button class="btn mt-4" @click="getProperties">Retry</button>
@@ -84,8 +84,7 @@ getProperties()
 function getProperties() {
   store.retrieveAll({
     page: 1,
-    limit: 100,
-
+    limit: 100
   })
 }
 
