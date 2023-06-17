@@ -12,7 +12,7 @@
     <FormInputField label="Password" type="password" class="dark" :field="password" />
 		<button :class="['btn !mt-6 block w-full', { loading: apiHandle.isLoading.value }]">Signup</button>
   </form>
-  <button class="mt-auto text-center text-primary" @click="gotoLogin">Login Instead</button>
+	<button class="mt-auto text-center text-primary" @click="() => gotoLogin()">Login Instead</button>
 </template>
 
 <script setup lang="ts">
@@ -26,8 +26,9 @@ import { useApiHandle } from '@/core/api/composables'
 
 import { useAuthStore } from '../store'
 import type { ISignupPayload } from '../services'
+import { IApiRequestStatus } from '@/core/api'
 
-const emit = defineEmits<{ (e: 'gotoLogin'): void }>()
+const emit = defineEmits<{ (e: 'gotoLogin', email?: string): void }>()
 
 const store = useAuthStore()
 const { signupApiStatus: apiStatus, signupApiMsg: apiMsg } = storeToRefs(store)
@@ -40,7 +41,7 @@ const form = new Form({
   password: new FormField(null, [[Validators.required, 'Password is required']])
 })
 
-function signup() {
+async function signup() {
   if (!form.validate()) return
 	
 	const payload: ISignupPayload = {
@@ -49,11 +50,16 @@ function signup() {
 		email: email.value.value.value!,
 		password: password.value.value.value!,
 	}
-	store.signup(payload);
+	await store.signup(payload);
+
+	if (apiStatus.value !== IApiRequestStatus.Success) return;
+
+	form.reset()
+	gotoLogin(payload.email);
 }
 
-function gotoLogin() {
-  emit('gotoLogin')
+function gotoLogin(email?: string) {
+  emit('gotoLogin', email)
 }
 
 const email = computed(() => form.getField<string>('email')!)

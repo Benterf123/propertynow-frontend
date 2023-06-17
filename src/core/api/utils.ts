@@ -41,8 +41,8 @@ export function getErrorMessage(err: any, message = 'An error occured. Please tr
     message =
       'Could not connect to our servers. Make sure you have an internet connection and try again.'
 
-  const resp: IApiResponse = (err as any).response
-  if (resp) message = resp.data.message
-
+  const resp: IApiResponse<{ error: string }> = (err as any).response
+  if (resp) message = resp.data.error ?? message
+	
   return message
 }

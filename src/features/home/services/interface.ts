@@ -1,4 +1,4 @@
-import { IApiResponse } from '@/core/api'
+import type { IApiResponse } from '@/core/api'
 
 import Property from "../models/property.model";
 

@@ -1,13 +1,33 @@
 <template>
   <div>
     <header class="h-[calc(100vh-64px)] bg-slate-950 text-white">
+      <div class="absolute inset-0 bg-red-50">
+        <img
+          :src="images[imgIdx].src"
+          :alt="images[imgIdx].alt"
+          class="h-full w-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 to-transparent" />
+      </div>
       <div class="c-container absolute inset-0 top-0 flex items-center px-3">
-        <h1 class="w-2/5 text-6xl font-light">You House is Waiting For You!</h1>
+        <div>
+          <h1 class="w-2/5 text-6xl font-light">You House is Waiting For You!</h1>
+          <a href="#properties" class="btn mt-12 inline-block">View Properties</a>
+        </div>
+        <button
+          class="group relative aspect-square w-16 rounded-full overflow-hidden border border-white text-white backdrop-blur-sm"
+          @click="gotoNextImage"
+        >
+          <div class="absolute left-4 -translate-x-[calc(8*0.25rem+2px)] top-1/2 transition-transform duration-300 flex items-center gap-x-3 group-hover:translate-x-0 -translate-y-1/2">
+            <ArrowLongRightIcon class="h-5 w-5" />
+            <ArrowLongRightIcon class="h-5 w-5" />
+          </div>
+        </button>
       </div>
     </header>
     <div class="relative">
       <div
-        class="absolute left-1/2 mx-auto grid w-max -translate-x-1/2 -translate-y-1/2 grid-cols-3 items-center gap-x-4 rounded-lg bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur-md"
+        class="absolute left-1/2 mx-auto grid w-max -translate-x-1/2 -translate-y-1/2 grid-cols-3 gap-x-4 rounded-lg bg-white/80 px-6 py-4 shadow-xl shadow-black/5 backdrop-blur-md"
       >
         <div>
           <p class="flex gap-x-2">
@@ -26,14 +46,17 @@
             <InputField v-model="maxPrice" name="maxPrice" placeholder="max" class="w-20" />
           </div>
         </div>
-        <button class="btn flex items-center gap-x-3 !px-4 !py-3" @click="getProperties">
+        <button
+          class="btn flex items-center justify-center gap-x-3 !px-4 !py-3"
+          @click="getProperties"
+        >
           <MagnifyingGlassIcon class="h-6 w-6" />
           Search
         </button>
       </div>
     </div>
-    <main class="bg-primary/0">
-      <div class="c-container pt-24">
+    <main class="pt-24">
+      <div id="properties" class="c-container">
         <div
           v-if="apiHandle.isError.value"
           class="error mx-auto mb-3 w-max bg-red-50 first-letter:capitalize md:max-w-[580px]"
@@ -67,11 +90,34 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { ArrowLongRightIcon, ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
-import { usePropertiesStore } from '../store'
 import { useApiHandle } from '@/core/api/composables'
 import { InputField } from '@/features/common/components'
+
+import { usePropertiesStore } from '../store'
+
+const images = [
+  {
+    src: '/images/hero-1.jpg',
+    alt: 'white concrete house near green tree during daytime',
+  },
+  {
+    src: '/images/hero-2.jpg',
+    alt: 'gray wooden house',
+  },
+  {
+    src: '/images/hero-3.jpg',
+    alt: 'brown black wooden house',
+  },
+]
+
+const imgIdx = ref(Math.floor(Math.random() * images.length))
+setInterval(gotoNextImage, 15000)
+
+function gotoNextImage() {
+  imgIdx.value = (imgIdx.value + 1) % images.length
+}
 
 const store = usePropertiesStore()
 const { propertiesApiStatus: apiStatus, propertiesApiMsg: apiMsg, properties } = storeToRefs(store)
@@ -84,10 +130,9 @@ getProperties()
 function getProperties() {
   store.retrieveAll({
     page: 1,
-    limit: 100
+    limit: 100,
   })
 }
 
 const selectedCity = 'Kigali'
-const selectedPrice = '$5000'
 </script>

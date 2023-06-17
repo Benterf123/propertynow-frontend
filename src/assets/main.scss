@@ -33,12 +33,20 @@
     @apply grid place-items-center;
   }
 
-  .error {
-    @apply mb-2 rounded border border-red-300 bg-red-500/10 p-3 text-red-800 dark:border-red-800 dark:text-red-400;
+  .error,
+  .success {
+    @apply mb-2 rounded border p-3;
 
     .title {
       @apply mb-2 text-2xl;
     }
+  }
+
+  .error {
+    @apply border-red-300 bg-red-300/10 text-red-800 dark:border-red-800 dark:text-red-400;
+  }
+  .success {
+    @apply border-green-300 bg-green-300/10 text-green-800 dark:border-green-800 dark:text-green-400;
   }
 
   .btn {
@@ -89,7 +97,7 @@
     @apply bg-primary/10 text-primary-dark transition-colors hover:bg-primary/20 dark:bg-primary/10 dark:text-primary-dark dark:hover:bg-primary/20;
 
     &:disabled {
-      @apply text-black/50 bg-transparent;
+      @apply bg-transparent text-black/50;
     }
   }
 

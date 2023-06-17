@@ -26,7 +26,10 @@ import { FormInputField } from '@/features/common/components'
 
 import { useAuthStore } from '../store'
 import type { ILoginPayload } from '../services'
+import { IApiRequestStatus } from '@/core/api'
+import { useRouter } from 'vue-router'
 
+const props = withDefaults(defineProps<{ signupEmail?: string | null }>(), { signupEmail: null })
 const emit = defineEmits<{ (e: 'gotoSignup'): void }>()
 
 const store = useAuthStore()
@@ -34,19 +37,24 @@ const { loginApiStatus: apiStatus, loginApiMsg: apiMsg } = storeToRefs(store)
 const apiHandle = useApiHandle(apiStatus)
 
 const form = new Form({
-  email: new FormField(null, [[Validators.required, 'Email is required']]),
-  password: new FormField(null, [[Validators.required, 'Password is required']])
+  email: new FormField(props.signupEmail, [[Validators.required, 'Email is required']]),
+  password: new FormField(null, [[Validators.required, 'Password is required']]),
 })
 
-function login() {
+const router = useRouter()
+async function login() {
   if (!form.validate()) return
 
   const payload: ILoginPayload = {
     email: email.value.value.value!,
-    password: password.value.value.value!
+    password: password.value.value.value!,
   }
 
-  store.login(payload)
+  await store.login(payload)
+  if (apiStatus.value !== IApiRequestStatus.Success) return
+
+  form.reset()
+  router.replace({ name: 'home' })
 }
 
 function gotoSignup() {

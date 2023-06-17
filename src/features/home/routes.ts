@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
 
 import HomeView from './index.vue'
 import ListingView from './pages/listing.vue'
