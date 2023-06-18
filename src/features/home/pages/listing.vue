@@ -66,21 +66,30 @@
           <p>{{ apiMsg }}</p>
           <button class="btn mt-4" @click="getProperties">Retry</button>
         </div>
-        <div v-else class="c-container grid grid-cols-2 p-3 pt-24 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <div
+          v-else
+          class="c-container grid grid-cols-2 gap-4 p-3 pt-24 md:grid-cols-3 lg:grid-cols-4"
+        >
           <div v-for="property of properties" :key="`property-${property.id}`">
             <div
-              class="relative h-48 rounded-lg bg-gradient-to-b from-transparent from-40% to-primary/30 p-3"
+              class="group relative h-48 rounded-lg bg-gradient-to-b from-transparent from-40% to-primary/30 p-3"
             >
               <AvatarImage
                 :src="property.image"
-                class="absolute left-1/2 h-full w-[calc(100%-4*0.25rem)] -translate-x-1/2 -translate-y-6 rounded-lg object-cover shadow-lg"
+                :class="[
+                  'absolute left-1/2 h-full w-[calc(100%-4*0.25rem)] -translate-x-1/2 -translate-y-6 rounded-lg object-cover shadow-lg',
+                  'overflow-hidden',
+                ]"
                 iconClass="w-20 h-20"
+                imgClass="transition-transform duration-500 group-hover:scale-105"
               />
             </div>
             <div class="mt-2">
               <div class="flex items-start justify-between">
                 <p class="">{{ property.title }}</p>
-                <p class="text-xl font-light"><span class="text-sm">$</span> {{ property.price }}</p>
+                <p class="text-xl font-light">
+                  <span class="text-sm">$</span> {{ property.price }}
+                </p>
               </div>
               <p class="truncate text-sm opacity-60">{{ property.description }}</p>
               <button class="btn-text mx-auto mt-2 block">Purchase</button>
