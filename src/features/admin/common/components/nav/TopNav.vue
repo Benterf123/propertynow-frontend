@@ -2,7 +2,7 @@
   <nav
     class="dark:bg-scaffold-tint/90 group sticky top-0 flex h-14 items-center gap-x-2 border-b border-slate-300 bg-white/80 px-3 backdrop-blur-xl dark:border-transparent"
   >
-    <Bars3Icon class="cursor-pointer md:hidden" @click="openSidenav" />
+    <Bars3Icon class="cursor-pointer w-6 h-6 md:hidden" @click="openSidenav" />
     <router-link :to="{ name: 'admin-home' }">Admin</router-link>
 		
     <button class="ml-auto" @click="logout">

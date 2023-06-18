@@ -24,7 +24,7 @@ export default class Property implements IProperty {
       description: json.description,
       price: json.price,
       location: json.location,
-      images: [json.image_url, 'https://picsum.photos/seed/prop/300', 'https://picsum.photos/seed/prop/300', 'https://picsum.photos/seed/prop/300'],
+      images: [json.image_url],
     })
   }
 
