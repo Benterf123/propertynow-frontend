@@ -57,6 +57,11 @@ export const useAdminPropertiesStore = defineStore('propertiesStore', {
         this.propertyApiMsg = ''
 
         const response = await propertiesService.retrieveOne(id)
+				if (Object.keys(response.data).length === 0) {
+					this.propertyApiStatus = IApiRequestStatus.Error
+					this.propertyApiMsg = 'This product was not found'
+					return;
+				}
         this.property = Property.fromJson(response.data)
 
         this.propertyApiStatus = IApiRequestStatus.Success
