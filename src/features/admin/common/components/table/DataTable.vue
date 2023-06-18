@@ -163,7 +163,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { ref, computed, watch, useSlots, onMounted, onUnmounted } from 'vue'
 import { formatRelative } from 'date-fns'
 import {
@@ -176,28 +176,14 @@ import {
 
 import { InputField } from '@/features/common/components'
 
-import Pagination from './Pagination.vue'
-import { pageSizeOptions } from '../constants'
-
-export interface IHeader {
-  text: string
-  value: string
-  sort?: 'asc' | 'desc' | null
-  classes?: string
-  itemClasses?: string
-  formatAsDate?: boolean
-  align?: 'left' | 'center' | 'right'
-}
-
-export interface ISortField {
-  name: string
-  value: IHeader['sort']
-}
+import Pagination from '../Pagination.vue'
+import { pageSizeOptions } from '../../constants'
+import { IHeader, ISortField } from './interface'
 
 const props = withDefaults(
   defineProps<{
-    headers: IHeader[]
-    items: { [propName: string]: any }[]
+		headers: IHeader<T>[]
+    items: T[]
     searchPlaceholder?: string
     totalItems?: number
     currentPage?: number
@@ -219,7 +205,7 @@ const emits = defineEmits<{
   (e: 'updatePageSize', size: number): void
   (e: 'gotoPage', size: number): void
   (e: 'search', query: string): void
-  (e: 'sort', field: ISortField): void
+	(e: 'sort', field: ISortField): void
 }>()
 
 const slots = useSlots()
@@ -262,11 +248,11 @@ function updatePageSize(e: Event): void {
 }
 
 const headerRerenderTriggerKey = ref(true)
-function sortHeader(header: IHeader) {
+function sortHeader(header: IHeader<T>) {
   const mode = header.sort
   if (mode === undefined) return
 
-  let sortMode: IHeader['sort'] = 'desc'
+	let sortMode: IHeader<T>['sort'] = 'desc'
   if (mode === 'desc') sortMode = 'asc'
   else if (mode === 'asc') sortMode = null
 

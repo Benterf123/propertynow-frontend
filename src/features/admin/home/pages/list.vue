@@ -59,7 +59,7 @@ import { PlusIcon } from '@heroicons/vue/20/solid'
 import { useApiHandle } from '@/core/api/composables'
 
 import { useAdminPropertiesStore } from '../store'
-import DataTable from '../../common/components/DataTable.vue'
+import DataTable from '../../common/components/table/DataTable.vue'
 import AvatarImage from '../../common/components/AvatarImage.vue'
 
 const store = useAdminPropertiesStore()
