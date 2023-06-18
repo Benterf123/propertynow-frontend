@@ -5,7 +5,7 @@ export default class Property implements IProperty {
   public title: string
   public description: string
   public price: string
-  public image: string
+  public images: string[]
   public location: { city: string; neighborhood: string }
 
   constructor(data: IProperty) {
@@ -14,7 +14,7 @@ export default class Property implements IProperty {
     this.description = data.description
     this.price = data.price
     this.location = data.location
-    this.image = data.image
+    this.images = data.images
   }
 
   static fromJson(json: IPropertyJson): Property {
@@ -24,7 +24,11 @@ export default class Property implements IProperty {
       description: json.description,
       price: json.price,
       location: json.location,
-      image: json.image_url,
+      images: [json.image_url, 'https://picsum.photos/seed/prop/300', 'https://picsum.photos/seed/prop/300', 'https://picsum.photos/seed/prop/300'],
     })
+  }
+
+  get image(): string {
+    return this.images[0]
   }
 }

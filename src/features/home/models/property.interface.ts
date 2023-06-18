@@ -15,7 +15,7 @@ export interface IProperty {
 	title: string;
 	description: string;
 	price: string;
-	image: string;
+	images: string[];
 	location: {
 		city: string;
 		neighborhood: string;

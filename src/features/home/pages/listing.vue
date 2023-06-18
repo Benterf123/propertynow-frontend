@@ -68,9 +68,13 @@
         </div>
         <div
           v-else
-          class="c-container grid grid-cols-2 gap-4 p-3 pt-24 md:grid-cols-3 lg:grid-cols-4"
+          class="c-container grid grid-cols-2 gap-4 p-3 md:grid-cols-3 lg:grid-cols-4"
         >
-          <div v-for="property of properties" :key="`property-${property.id}`">
+          <RouterLink
+            v-for="property of properties"
+            :key="`property-${property.id}`"
+            :to="{ name: 'property-details', params: { id: property.id } }"
+          >
             <div
               class="group relative h-48 rounded-lg bg-gradient-to-b from-transparent from-40% to-primary/30 p-3"
             >
@@ -94,7 +98,7 @@
               <p class="truncate text-sm opacity-60">{{ property.description }}</p>
               <button class="btn-text mx-auto mt-2 block">Purchase</button>
             </div>
-          </div>
+          </RouterLink>
         </div>
       </div>
     </main>
@@ -103,6 +107,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { ArrowLongRightIcon, ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
