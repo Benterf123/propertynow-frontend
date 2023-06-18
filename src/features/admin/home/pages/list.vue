@@ -17,6 +17,7 @@
       <p>{{ apiMsg }}</p>
     </div>
     <DataTable
+      v-if="properties"
       :headers="[
         {
           text: 'Name',
@@ -27,22 +28,24 @@
           value: 'description',
         },
         {
-          text: 'Price',
+          text: 'Price ($)',
           value: 'price',
+          align: 'center',
         },
       ]"
       :items="properties"
       @item-click="gotoProperty"
     >
       <template #grid-item="property">
-        <div class="cursor-pointer rounded-lg text-center duration-[inherit]">
+        <div class="group cursor-pointer rounded-lg text-center duration-[inherit]">
           <AvatarImage
-            class="prop-hover:opacity-100 h-[100px] w-full opacity-60 transition-opacity duration-[inherit]"
+            :src="property.image"
+            class="h-[100px] w-full opacity-60 transition-opacity duration-[inherit] group-hover:opacity-100"
             iconClass="w-10 h-10"
           />
           <div class="p-3 pt-0">
             <p class="mt-2">{{ property.title }}</p>
-            <p class="truncate text-sm opacity-80">{{ property.price }}</p>
+            <p class="truncate text-sm opacity-80">$ {{ property.price }}</p>
           </div>
         </div>
       </template>

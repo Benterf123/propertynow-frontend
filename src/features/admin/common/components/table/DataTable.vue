@@ -178,7 +178,7 @@ import { InputField } from '@/features/common/components'
 
 import Pagination from '../Pagination.vue'
 import { pageSizeOptions } from '../../constants'
-import { IHeader, ISortField } from './interface'
+import type { IHeader, ISortField } from './interface'
 
 const props = withDefaults(
   defineProps<{
