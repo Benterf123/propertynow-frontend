@@ -7,9 +7,9 @@
           class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/60 to-transparent md:bg-gradient-to-r"
         />
       </div>
-      <div class="c-container absolute inset-0 top-0 flex items-center px-3">
+      <div class="absolute justify-between bg-slate-950/10 inset-0 top-0 flex items-center px-3">
         <div class="relative text-center md:text-left">
-          <h1 class="text-6xl font-light md:w-2/5">You House is Waiting For You!</h1>
+          <h1 class="text-6xl font-light md:w-3/5 lg:w-2/5">Your House is Waiting For You!</h1>
           <a href="#properties" class="btn mt-12 inline-block">View Properties</a>
           <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-full sm:hidden">
             <div class="mx-auto h-20 w-[2px] rounded-t-full bg-white" />
@@ -21,12 +21,12 @@
           </div>
         </div>
         <button
-          class="group relative hidden aspect-square w-16 overflow-hidden rounded-full border border-white text-white backdrop-blur-sm md:block"
+          class="group relative hidden shrink-0 w-12 h-12 overflow-hidden rounded-full border border-white text-white backdrop-blur-sm md:block"
           @click="gotoNextImage"
         >
           <div
             :class="[
-              'absolute left-4 top-1/2 flex -translate-y-1/2 items-center gap-x-3 transition-transform duration-300',
+              'absolute left-[calc(3*0.25rem+2px)] top-1/2 flex -translate-y-1/2 items-center gap-x-[calc(3*0.25rem+2px)] transition-transform duration-300',
               'hover:translate-x-0 group-hover:-translate-x-[calc(8*0.25rem+2px)]',
             ]"
           >
