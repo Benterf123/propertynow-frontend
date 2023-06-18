@@ -5,22 +5,36 @@
       <ul class="flex items-center"></ul>
 
       <div class="flex items-center">
-        <button v-if="isUserAuthed" class="btn-text text-white bg-transparent" @click="logout">Logout</button>
-				<RouterLink v-else :to="{ name: 'auth' }" class="btn">Login</RouterLink>
+        <button
+          v-if="isUserAuthed"
+          :class="['btn-text bg-transparent text-white', { loading: isLoggingOut }]"
+          @click="logout"
+        >
+          Logout
+        </button>
+        <RouterLink v-else :to="{ name: 'auth' }" class="btn">Login</RouterLink>
       </div>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 
-import { useAuthStore } from '@/features/auth/store';
+import { useAuthStore } from '@/features/auth/store'
+import { delay } from '@/common/functional';
 
 const store = useAuthStore()
 const { isUserAuthed } = storeToRefs(store)
 
-function logout() {
+const isLoggingOut = ref(false)
+async function logout() {
+  isLoggingOut.value = true
+	
+	await delay(500);
 	store.logout()
+
+  isLoggingOut.value = false
 }
 </script>
