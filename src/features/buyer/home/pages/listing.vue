@@ -12,8 +12,12 @@
           <h1 class="text-6xl font-light md:w-2/5">You House is Waiting For You!</h1>
           <a href="#properties" class="btn mt-12 inline-block">View Properties</a>
           <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-full sm:hidden">
-            <div class="h-20 w-[2px] rounded-t-full bg-white mx-auto" />
-						<div class="h-5 rounded-full aspect-square bg-white/10 backdrop-blur-sm border-2 border-white" />
+            <div class="mx-auto h-20 w-[2px] rounded-t-full bg-white" />
+            <div
+              class="aspect-square h-5 rounded-full border-2 border-white bg-white/10 backdrop-blur-sm"
+              @click="gotoNextImage"
+              role="button"
+            />
           </div>
         </div>
         <button
