@@ -3,12 +3,18 @@
     <header class="h-[calc(100vh-64px)] bg-slate-950 text-white">
       <div class="absolute inset-0 bg-red-50">
         <Slideshow v-model:currentIndex="imgIdx" class="h-full w-full" :images="images" />
-        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 to-transparent" />
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-950/60 to-transparent md:bg-gradient-to-r"
+        />
       </div>
       <div class="c-container absolute inset-0 top-0 flex items-center px-3">
-        <div class="text-center md:text-left">
+        <div class="relative text-center md:text-left">
           <h1 class="text-6xl font-light md:w-2/5">You House is Waiting For You!</h1>
           <a href="#properties" class="btn mt-12 inline-block">View Properties</a>
+          <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-full sm:hidden">
+            <div class="h-20 w-[2px] rounded-t-full bg-white mx-auto" />
+						<div class="h-5 rounded-full aspect-square bg-white/10 backdrop-blur-sm border-2 border-white" />
+          </div>
         </div>
         <button
           class="group relative hidden aspect-square w-16 overflow-hidden rounded-full border border-white text-white backdrop-blur-sm md:block"
@@ -58,7 +64,7 @@
     </div>
     <main class="px-3 pt-24">
       <div id="properties" class="">
-        <div v-if="apiHandle.isLoading.value" class="flex gap-x-3 items-center">
+        <div v-if="apiHandle.isLoading.value" class="flex items-center gap-x-3">
           <p>Fetching properties...</p>
           <DotsLoader />
         </div>
