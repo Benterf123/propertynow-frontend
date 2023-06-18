@@ -49,7 +49,7 @@ export function isAuthTokenValid(offset = 0, token?: string): boolean {
 
 export function isTokenForAdmin(token?: string): boolean {
   const authToken = token ?? retrieveAuthToken(TokenCategory.Access)!
-  const isAdmin = JSON.parse(atob(authToken.split('.')[1])).account_type == 'admin'
+  const isAdmin = JSON.parse(atob(authToken.split('.')[1])).sub.account_type == 'admin'
   return isAdmin
 }
 

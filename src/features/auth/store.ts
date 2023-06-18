@@ -32,7 +32,6 @@ export const useAuthStore = defineStore('auth-store', {
 
         const response = await authService.login(payload)
         const accessToken = response.data.access_token
-        const isAdmin = isTokenForAdmin(accessToken)
 
         saveAuthToken(accessToken)
         this.loginApiStatus = IApiRequestStatus.Success

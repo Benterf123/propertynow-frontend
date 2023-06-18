@@ -28,6 +28,8 @@ import { useAuthStore } from '../store'
 import type { ILoginPayload } from '../services'
 import { IApiRequestStatus } from '@/core/api'
 import { useRouter } from 'vue-router'
+import { isTokenForAdmin, retrieveAuthToken } from '@/common/functional'
+import { TokenCategory } from '@/common/constants'
 
 const props = withDefaults(defineProps<{ signupEmail?: string | null }>(), { signupEmail: null })
 const emit = defineEmits<{ (e: 'gotoSignup'): void }>()
@@ -54,7 +56,14 @@ async function login() {
   if (apiStatus.value !== IApiRequestStatus.Success) return
 
   form.reset()
-  router.replace({ name: 'home' })
+
+  const token = retrieveAuthToken(TokenCategory.Access)
+  const isAdmin = token ? isTokenForAdmin(token) : false
+  let path = { name: 'home' }
+  if (isAdmin) path = { name: 'admin-home' }
+
+  console.log('Route to:', path)
+  router.replace(path)
 }
 
 function gotoSignup() {
