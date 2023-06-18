@@ -22,7 +22,7 @@ router.beforeEach((to) => {
   const isUserAdmin = isTokenValidForAdmin()
   if (isUserAdmin) return
 
-  return { name: 'err-not-allowed' }
+  return { name: 'err-not-allowed', query: { to: to.path } }
 
   console.log(isAdminRoute, isUserAdmin, to)
   // const isTokenValid = isAuthTokenValid()
