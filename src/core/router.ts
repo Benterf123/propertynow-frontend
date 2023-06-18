@@ -1,33 +1,39 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
 
-// import {
-//   isAuthTokenValid,
-//   isTokenForAdmin,
-// } from "@/common/functional/authToken";
+import { isAuthTokenValid, isTokenValidForAdmin } from '@/common/functional/authToken'
 
-import { adminRoutes } from '@/features/admin/routes';
-import { authRoutes } from '@/features/auth/routes.ts';
-import { homeRoutes } from '@/features/home/routes.ts';
+import { adminRoutes } from '@/features/admin/routes'
+import { authRoutes } from '@/features/auth/routes'
+import { homeRoutes } from '@/features/home/routes'
+import { errorsRoutes } from '@/features/errors/routes'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-		...adminRoutes,
-		...authRoutes,
-		...homeRoutes,
-	],
-});
+  routes: [...adminRoutes, ...authRoutes, ...homeRoutes, ...errorsRoutes],
+})
 
 router.beforeEach((to) => {
-  // const isTokenValid = isAuthTokenValid();
-  // const isUserAdmin = isTokenForAdmin();
-  // if ((!isTokenValid || !isUserAdmin) && to.name !== "login") {
-  //   const query: { [propName: string]: any } = { to: to.path };
-  //   if (isTokenValid && !isUserAdmin) {
-  //     query["isNotAdmin"] = true;
-  //   }
-  //   return { name: "login", query: query };
-  // }
-});
+  const isAdminRoute = (to.name as string | undefined)?.includes('admin-')
+  if (!isAdminRoute) return
 
-export default router;
+  const isLoggedIn = isAuthTokenValid()
+  if (!isLoggedIn) return { name: 'auth', query: { to: to.path } }
+
+  const isUserAdmin = isTokenValidForAdmin()
+  if (isUserAdmin) return
+
+  return { name: 'err-not-allowed' }
+
+  console.log(isAdminRoute, isUserAdmin, to)
+  // const isTokenValid = isAuthTokenValid()
+  // const isUserAdmin = isTokenValidForAdmin()
+  // if ((!isTokenValid || !isUserAdmin) && to.name !== 'login') {
+  //   const query: { [propName: string]: any } = { to: to.path }
+  //   if (isTokenValid && !isUserAdmin) {
+  //     query['isNotAdmin'] = true
+  //   }
+  //   return { name: 'login', query: query }
+  // }
+})
+
+export default router

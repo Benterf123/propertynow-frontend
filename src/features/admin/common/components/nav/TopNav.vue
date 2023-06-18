@@ -4,11 +4,17 @@
   >
     <Bars3Icon class="cursor-pointer md:hidden" @click="openSidenav" />
     <router-link :to="{ name: 'admin-home' }">Admin</router-link>
+		
+    <button class="ml-auto" @click="logout">
+      <ArrowRightOnRectangleIcon class="h-6 w-6" />
+    </button>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { Bars3Icon } from '@heroicons/vue/24/outline'
+import { useAuthStore } from '@/features/auth/store'
+import { ArrowRightOnRectangleIcon, Bars3Icon } from '@heroicons/vue/24/outline'
+import { useRouter } from 'vue-router'
 
 defineProps<{
   modelValue: boolean
@@ -19,5 +25,12 @@ const emit = defineEmits<{
 
 function openSidenav() {
   emit('update:modelValue', false)
+}
+
+const authStore = useAuthStore()
+const router = useRouter()
+async function logout() {
+  authStore.logout()
+  router.replace({ name: 'auth' })
 }
 </script>
