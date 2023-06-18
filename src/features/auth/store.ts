@@ -2,13 +2,15 @@ import { defineStore } from 'pinia'
 
 import { IApiRequestStatus } from '@/core/api'
 import { getErrorMessage } from '@/core/api/utils'
+import { isAuthTokenValid, removeAuthToken, saveAuthToken } from '@/common/functional'
+import { TokenCategory } from '@/common/constants'
 
 import { authService, type ILoginPayload, type ISignupPayload } from './services'
-import { isTokenForAdmin, saveAuthToken } from '@/common/functional'
 
 interface IState {
   loginApiStatus: IApiRequestStatus
   loginApiMsg: string
+	isUserAuthed: boolean
 
   signupApiStatus: IApiRequestStatus
   signupApiMsg: string
@@ -17,6 +19,7 @@ interface IState {
 const state = (): IState => ({
   loginApiStatus: IApiRequestStatus.Default,
   loginApiMsg: '',
+	isUserAuthed: isAuthTokenValid(),
 
   signupApiStatus: IApiRequestStatus.Default,
   signupApiMsg: ''
@@ -34,6 +37,7 @@ export const useAuthStore = defineStore('auth-store', {
         const accessToken = response.data.access_token
 
         saveAuthToken(accessToken)
+				this.isUserAuthed = true;
         this.loginApiStatus = IApiRequestStatus.Success
       } catch (e) {
         this.loginApiStatus = IApiRequestStatus.Error
@@ -48,7 +52,7 @@ export const useAuthStore = defineStore('auth-store', {
         this.signupApiMsg = ''
         this.signupApiStatus = IApiRequestStatus.Loading
 
-        const response = await authService.signup(payload)
+        await authService.signup(payload)
 
         this.signupApiStatus = IApiRequestStatus.Success
       } catch (e) {
@@ -57,6 +61,16 @@ export const useAuthStore = defineStore('auth-store', {
         const message = getErrorMessage(e, 'An error occured while signing up')
         this.signupApiMsg = message
       }
-    }
+    },
+
+		logout() {
+			this.loginApiStatus = IApiRequestStatus.Default;
+			this.loginApiMsg = '';
+			this.signupApiStatus = IApiRequestStatus.Default;
+			this.signupApiMsg = '';
+
+			removeAuthToken(TokenCategory.Access)
+			this.isUserAuthed = false;
+		}
   }
 })

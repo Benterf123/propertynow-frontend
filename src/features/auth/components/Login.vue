@@ -62,7 +62,6 @@ async function login() {
   let path = { name: 'home' }
   if (isAdmin) path = { name: 'admin-home' }
 
-  console.log('Route to:', path)
   router.replace(path)
 }
 
