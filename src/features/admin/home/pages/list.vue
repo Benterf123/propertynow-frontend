@@ -15,7 +15,7 @@
     <div v-if="apiHandle.isError.value" class="error mb-3">
       <p class="title">Error</p>
       <p>{{ apiMsg }}</p>
-			<button class="btn mt-4" @click="getProperties">Retry</button>
+      <button class="btn mt-4" @click="getProperties">Retry</button>
     </div>
     <DataTable
       v-if="properties"
@@ -83,7 +83,7 @@ const apiHandle = useApiHandle(apiStatus)
 getProperties()
 function getProperties() {
   store.retrieveAll({
-    page: 0,
+    page: 1,
     limit: 1000,
   })
 }

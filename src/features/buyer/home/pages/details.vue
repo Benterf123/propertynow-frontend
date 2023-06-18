@@ -67,8 +67,7 @@ import { storeToRefs } from 'pinia'
 import { useApiHandle } from '@/core/api/composables'
 import { DotsLoader, Slideshow } from '@/features/common/components'
 
-import { BackBtn } from '@/features/common/components'
-
+import { BackBtn } from '../../common/components'
 import { usePropertiesStore } from '../store'
 
 const store = usePropertiesStore()

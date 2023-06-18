@@ -17,7 +17,7 @@
           <div
             :class="[
               'absolute left-4 top-1/2 flex -translate-y-1/2 items-center gap-x-3 transition-transform duration-300',
-              'group-hover:-translate-x-[calc(8*0.25rem+2px)] hover:translate-x-0',
+              'hover:translate-x-0 group-hover:-translate-x-[calc(8*0.25rem+2px)]',
             ]"
           >
             <ArrowLongRightIcon class="h-5 w-5" />
@@ -144,7 +144,7 @@ const maxPrice = ref(10000)
 getProperties()
 function getProperties() {
   store.retrieveAll({
-    page: 0,
+    page: 1,
     limit: 100,
   })
 }

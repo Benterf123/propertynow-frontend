@@ -12,9 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/features/auth/store'
-import { ArrowRightOnRectangleIcon, Bars3Icon } from '@heroicons/vue/24/outline'
 import { useRouter } from 'vue-router'
+import { ArrowRightOnRectangleIcon, Bars3Icon } from '@heroicons/vue/24/outline'
+
+import { useAuthStore } from '@/features/buyer/auth/store'
 
 defineProps<{
   modelValue: boolean

@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 
 import { IApiRequestStatus } from '@/core/api'
 import { getErrorMessage } from '@/core/api/utils'
-import Property from '@/features/home/models/property.model'
-import { type IPropertiesParams, propertiesService } from '@/features/home/services'
+import { Property } from '@/features/common/models'
+import { type IPropertiesParams } from '@/features/common/interface'
+import { propertiesService } from '@/features/common/service'
 
 import { type TPropertyAddPayload, propertiesService as adminPropertiesService } from './services'
 
@@ -75,15 +76,15 @@ export const useAdminPropertiesStore = defineStore('propertiesStore', {
         this.propertyApiMsg = message
       }
     },
-    
-		async addProperty(payload: TPropertyAddPayload) {
+
+    async addProperty(payload: TPropertyAddPayload) {
       try {
         this.propertyAddApiStatus = IApiRequestStatus.Loading
         this.propertyAddApiMsg = ''
 
         const response = await adminPropertiesService.addProperty(payload)
         const property = Property.fromJson(response.data)
-				this.properties?.unshift(property)
+        this.properties?.unshift(property)
 
         this.propertyAddApiStatus = IApiRequestStatus.Success
       } catch (e) {

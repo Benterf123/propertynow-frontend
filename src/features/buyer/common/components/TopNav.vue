@@ -22,8 +22,8 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import { useAuthStore } from '@/features/auth/store'
 import { delay } from '@/common/functional';
+import { useAuthStore } from '../../auth/store'
 
 const store = useAuthStore()
 const { isUserAuthed } = storeToRefs(store)
