@@ -6,12 +6,12 @@
         <div class="absolute inset-0 bg-gradient-to-r from-slate-950 to-transparent" />
       </div>
       <div class="c-container absolute inset-0 top-0 flex items-center px-3">
-        <div>
-          <h1 class="w-2/5 text-6xl font-light">You House is Waiting For You!</h1>
+        <div class="text-center md:text-left">
+          <h1 class="text-6xl font-light md:w-2/5">You House is Waiting For You!</h1>
           <a href="#properties" class="btn mt-12 inline-block">View Properties</a>
         </div>
         <button
-          class="group relative aspect-square w-16 overflow-hidden rounded-full border border-white text-white backdrop-blur-sm"
+          class="group relative hidden aspect-square w-16 overflow-hidden rounded-full border border-white text-white backdrop-blur-sm md:block"
           @click="gotoNextImage"
         >
           <div
@@ -28,7 +28,7 @@
     </header>
     <div class="relative">
       <div
-        class="absolute left-1/2 mx-auto grid w-max -translate-x-1/2 -translate-y-1/2 grid-cols-3 gap-x-4 rounded-lg bg-white/80 px-6 py-4 shadow-xl shadow-black/5 backdrop-blur-md"
+        class="absolute left-1/2 mx-auto grid w-[calc(100%-3*0.25rem)] -translate-x-1/2 -translate-y-1/2 grid-cols-3 gap-x-4 rounded-lg bg-white/80 px-6 py-4 shadow-xl shadow-black/5 backdrop-blur-md md:w-max"
       >
         <div>
           <p class="flex gap-x-2">
@@ -56,16 +56,20 @@
         </button>
       </div>
     </div>
-    <main class="pt-24">
-      <div id="properties" class="c-container">
+    <main class="px-3 pt-24">
+      <div id="properties" class="">
+        <div v-if="apiHandle.isLoading.value" class="flex gap-x-3 items-center">
+          <p>Fetching properties...</p>
+          <DotsLoader />
+        </div>
         <div
-          v-if="apiHandle.isError.value"
-          class="error mx-auto mb-3 w-max bg-red-50 first-letter:capitalize md:max-w-[580px]"
+          v-else-if="apiHandle.isError.value"
+          class="error mx-auto mb-3 bg-red-50 first-letter:capitalize md:max-w-[580px]"
         >
           <p>{{ apiMsg }}</p>
           <button class="btn mt-4" @click="getProperties">Retry</button>
         </div>
-        <div v-else class="c-container grid grid-cols-2 gap-4 p-3 md:grid-cols-3 lg:grid-cols-4">
+        <div v-else class="grid grid-cols-2 gap-4 py-3 md:grid-cols-3 lg:grid-cols-4">
           <RouterLink
             v-for="property of properties"
             :key="`property-${property.id}`"
@@ -108,7 +112,7 @@ import { storeToRefs } from 'pinia'
 import { ArrowLongRightIcon, ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 import { useApiHandle } from '@/core/api/composables'
-import { AvatarImage, InputField, Slideshow } from '@/features/common/components'
+import { DotsLoader, AvatarImage, InputField, Slideshow } from '@/features/common/components'
 
 import { usePropertiesStore } from '../store'
 

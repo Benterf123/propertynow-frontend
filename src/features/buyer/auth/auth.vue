@@ -3,14 +3,14 @@
     <div class="absolute inset-0">
       <img src="/images/auth-backdrop.jpg" alt="property" class="h-full w-full object-cover" />
     </div>
-    <div class="absolute inset-0 bg-gradient-to-r from-black/90" />
-    <div class="absolute flex flex-col text-white left-8 top-1/2 h-4/5 w-[340px] -translate-y-1/2">
-      <button class="flex items-center gap-x-2" @click="$router.back()">
+    <div class="absolute inset-0 bg-gradient-to-b to-black/30 sm:to-transparent sm:bg-gradient-to-r from-black/90" />
+    <div class="absolute flex flex-col text-white left-1/2 sm:left-8 top-1/2 h-4/5 w-[calc(100%-12*0.25rem)] -translate-x-1/2 sm:translate-x-0 sm:w-[340px] -translate-y-1/2">
+      <button class="flex w-max items-center gap-x-2" @click="$router.back()">
         <ArrowLongLeftIcon class="h-5 w-5" />
         <span>View Properties</span>
       </button>
       <div
-        class="mt-4 rounded-lg border flex-1 border-white/10 bg-gradient-to-l from-black/80 to-transparent shadow-lg shadow-black backdrop-blur-md"
+        class="mt-4 rounded-lg border flex-1 border-white/10 bg-gradient-to-t sm:bg-gradient-to-l from-black/80 to-transparent shadow-lg shadow-black backdrop-blur-md"
       >
         <Transition
           mode="out-in"

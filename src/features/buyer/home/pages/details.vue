@@ -1,14 +1,17 @@
 <template>
   <div class="px-3 pb-12 pt-3">
-    <h1 class="mb-3 flex items-center gap-x-3">
-      <BackBtn>{{ property ? property.title : 'Property' }}</BackBtn>
-      <DotsLoader v-if="apiHandle.isLoading.value" />
-    </h1>
+    <div class="flex items-center justify-between">
+      <h1 class="mb-3 flex items-center gap-x-3">
+        <BackBtn>{{ property ? property.title : 'Property' }}</BackBtn>
+        <DotsLoader v-if="apiHandle.isLoading.value" />
+      </h1>
+      <button class="btn md:hidden">Purchase</button>
+    </div>
     <div v-if="apiHandle.isError.value" class="error mb-3">
       <p class="title">Error</p>
       <p class="capitalize">{{ apiMsg }}</p>
     </div>
-    <section v-if="property" class="mt-4 flex gap-4">
+    <section v-if="property" class="mt-2 md:mt-4 gap-x-4 md:flex">
       <Slideshow
         v-model:currentIndex="currentImageIdx"
         class="md:w-max-[400px] aspect-square flex-1 rounded-lg"
@@ -19,7 +22,7 @@
           }))
         "
       />
-      <div class="flex-1">
+      <div class="mt-4 md:mt-0 md:flex-1">
         <div class="grid grid-cols-6 gap-3">
           <div
             v-for="(img, i) of property.images"

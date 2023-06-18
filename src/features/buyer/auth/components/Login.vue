@@ -10,7 +10,7 @@
       Login
     </button>
   </form>
-  <button class="loading mt-auto text-center text-primary" @click="gotoSignup">
+  <button class="loading w-max mx-auto mt-auto text-center text-primary" @click="gotoSignup">
     Signup Instead
   </button>
 </template>

@@ -10,9 +10,13 @@
     </div>
     <FormInputField label="Email" type="email" class="dark" :field="email" />
     <FormInputField label="Password" type="password" class="dark" :field="password" />
-		<button :class="['btn !mt-6 block w-full', { loading: apiHandle.isLoading.value }]">Signup</button>
+    <button :class="['btn !mt-6 block w-full', { loading: apiHandle.isLoading.value }]">
+      Signup
+    </button>
   </form>
-	<button class="mt-auto text-center text-primary" @click="() => gotoLogin()">Login Instead</button>
+  <button class="mx-auto mt-auto block w-max text-center text-primary" @click="() => gotoLogin()">
+    Login Instead
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -38,24 +42,24 @@ const form = new Form({
   firstName: new FormField(null, [[Validators.required, 'FirstName is required']]),
   lastName: new FormField(null, [[Validators.required, 'LastName is required']]),
   email: new FormField(null, [[Validators.required, 'Email is required']]),
-  password: new FormField(null, [[Validators.required, 'Password is required']])
+  password: new FormField(null, [[Validators.required, 'Password is required']]),
 })
 
 async function signup() {
   if (!form.validate()) return
-	
-	const payload: ISignupPayload = {
-		first_name: firstName.value.value.value!,
-		last_name: lastName.value.value.value!,
-		email: email.value.value.value!,
-		password: password.value.value.value!,
-	}
-	await store.signup(payload);
 
-	if (apiStatus.value !== IApiRequestStatus.Success) return;
+  const payload: ISignupPayload = {
+    first_name: firstName.value.value.value!,
+    last_name: lastName.value.value.value!,
+    email: email.value.value.value!,
+    password: password.value.value.value!,
+  }
+  await store.signup(payload)
 
-	form.reset()
-	gotoLogin(payload.email);
+  if (apiStatus.value !== IApiRequestStatus.Success) return
+
+  form.reset()
+  gotoLogin(payload.email)
 }
 
 function gotoLogin(email?: string) {
