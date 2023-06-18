@@ -13,16 +13,15 @@
       :headers="[
         {
           text: 'Name',
-          value: 'name',
+          value: 'title',
+        },
+        {
+          text: 'Description',
+          value: 'description',
         },
         {
           text: 'Price',
           value: 'price',
-        },
-        {
-          text: 'createdAt',
-          value: 'createdAt',
-          formatAsDate: true,
         },
       ]"
       :items="properties"
@@ -40,7 +39,7 @@
         </div>
       </template>
       <template #list-item-value="{ itemKey, value, item: property }">
-        <div v-if="itemKey === 'name'" class="flex min-w-[150px] items-center gap-x-2">
+        <div v-if="itemKey === 'title'" class="flex min-w-[150px] items-center gap-x-2">
           <AvatarImage class="shrink- h-10 w-10" :src="property.image" />
           <span>{{ value }}</span>
         </div>
@@ -53,30 +52,25 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { storeToRefs } from 'pinia'
+import { RouterLink } from 'vue-router'
 import { PlusIcon } from '@heroicons/vue/20/solid'
 
+import { useApiHandle } from '@/core/api/composables'
+
+import { useAdminPropertiesStore } from '../store'
 import DataTable from '../../common/components/DataTable.vue'
 import AvatarImage from '../../common/components/AvatarImage.vue'
 
-const properties = [
-  {
-    id: 1,
-    image: 'https://picsum.photos/100/100',
-    name: 'Sugushu Topi',
-    price: '$300',
-    createdAt: new Date(),
-  },
-]
+const store = useAdminPropertiesStore()
+const { propertiesApiStatus: apiStatus, propertiesApiMsg: apiMsg, properties } = storeToRefs(store)
+const apiHandle = useApiHandle(apiStatus)
 
-interface IPropertyJson {
-  title: string
-  description: string
-  price: number
-  seller_id: number
-  location: {
-    city: string
-    neighborhood: string
-  }
+getProperties()
+function getProperties() {
+	store.retrieveAll({
+		page: 0,
+		limit: 1000,
+	});
 }
 </script>

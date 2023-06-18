@@ -1,6 +1,6 @@
 import type { IApiResponse } from '@/core/api'
 
-import Property from "../models/property.model";
+import type { IPropertyJson } from '../models/property.interface';
 
 
 export interface IPropertiesParams {
@@ -10,4 +10,4 @@ export interface IPropertiesParams {
 	city?: string;
 	neighborhood?: string;
 }
-export interface IPropertiesApiResponse extends IApiResponse<Property[]> {}
+export interface IPropertiesApiResponse extends IApiResponse<IPropertyJson[]> {}
