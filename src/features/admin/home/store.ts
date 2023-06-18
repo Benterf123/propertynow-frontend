@@ -5,6 +5,8 @@ import { getErrorMessage } from '@/core/api/utils'
 import Property from '@/features/home/models/property.model'
 import { type IPropertiesParams, propertiesService } from '@/features/home/services'
 
+import { type TPropertyAddPayload, propertiesService as adminPropertiesService } from './services'
+
 interface IState {
   propertiesApiStatus: IApiRequestStatus
   propertiesApiMsg: string
@@ -13,16 +15,22 @@ interface IState {
   propertyApiStatus: IApiRequestStatus
   propertyApiMsg: string
   property: Property | null
+
+  propertyAddApiStatus: IApiRequestStatus
+  propertyAddApiMsg: string
 }
 
 const state = (): IState => ({
   propertiesApiStatus: IApiRequestStatus.Default,
   propertiesApiMsg: '',
-  properties: [],
+  properties: null,
 
   propertyApiStatus: IApiRequestStatus.Default,
   propertyApiMsg: '',
   property: null,
+
+  propertyAddApiStatus: IApiRequestStatus.Default,
+  propertyAddApiMsg: '',
 })
 
 export const useAdminPropertiesStore = defineStore('propertiesStore', {
@@ -47,21 +55,16 @@ export const useAdminPropertiesStore = defineStore('propertiesStore', {
 
     async retrieveOne(id: string) {
       try {
-				const property = this.properties?.find((p) => p.id === id)
-				if (property) {
-					this.property = property;
-					return;
-				}
+        const property = this.properties?.find((p) => p.id === id)
+        if (property) {
+          this.property = property
+          return
+        }
 
         this.propertyApiStatus = IApiRequestStatus.Loading
         this.propertyApiMsg = ''
 
         const response = await propertiesService.retrieveOne(id)
-				if (Object.keys(response.data).length === 0) {
-					this.propertyApiStatus = IApiRequestStatus.Error
-					this.propertyApiMsg = 'This property was not found'
-					return;
-				}
         this.property = Property.fromJson(response.data)
 
         this.propertyApiStatus = IApiRequestStatus.Success
@@ -70,6 +73,24 @@ export const useAdminPropertiesStore = defineStore('propertiesStore', {
 
         const message = getErrorMessage(e)
         this.propertyApiMsg = message
+      }
+    },
+    
+		async addProperty(payload: TPropertyAddPayload) {
+      try {
+        this.propertyAddApiStatus = IApiRequestStatus.Loading
+        this.propertyAddApiMsg = ''
+
+        const response = await adminPropertiesService.addProperty(payload)
+        const property = Property.fromJson(response.data)
+				this.properties?.unshift(property)
+
+        this.propertyAddApiStatus = IApiRequestStatus.Success
+      } catch (e) {
+        this.propertyAddApiStatus = IApiRequestStatus.Error
+
+        const message = getErrorMessage(e)
+        this.propertyAddApiMsg = message
       }
     },
   },

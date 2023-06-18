@@ -1,13 +1,13 @@
-import axios, { type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse } from 'axios'
 
-import type { IApiRequestConfig } from './interfaces';
+import type { IApiRequestConfig } from './interfaces'
 import {
   authInterceptor,
   requestLoggerInterceptor,
   responseLoggerInterceptor,
-} from './interceptors';
+} from './interceptors'
 
-export const baseURL = import.meta.env.VITE_API_URL;
+export const baseURL = import.meta.env.VITE_API_URL
 
 const instance = axios.create({
   baseURL,
@@ -16,46 +16,57 @@ const instance = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-});
+})
 
-instance.interceptors.request.use(authInterceptor);
-instance.interceptors.request.use(requestLoggerInterceptor);
+instance.interceptors.request.use(authInterceptor)
+instance.interceptors.request.use(requestLoggerInterceptor)
 instance.interceptors.response.use(
   responseLoggerInterceptor.success,
-  responseLoggerInterceptor.error
-);
+  responseLoggerInterceptor.error,
+)
 
 export const api = {
   request(config: IApiRequestConfig) {
-    const onSuccess = config.onSuccess;
-    const onError = config.onError;
+    const onSuccess = config.onSuccess
+    const onError = config.onError
 
-    delete config.onSuccess;
-    delete config.onError;
+    delete config.onSuccess
+    delete config.onError
 
+    if (config.isFormData) {
+      config = {
+        ...config,
+        headers: {
+          ...config.headers,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    }
+		
+		console.log('Config:', config.headers)
     instance
       .request(config)
       .then((data: AxiosResponse) => {
-        if (onSuccess) onSuccess(data);
+        if (onSuccess) onSuccess(data)
       })
       .catch((err) => {
-        if (onError) onError(err);
-      });
+        if (onError) onError(err)
+      })
   },
 
   get(url: string, config: IApiRequestConfig) {
-    return this.request({ method: 'get', url, ...config });
+    return this.request({ method: 'get', url, ...config })
   },
 
   post(url: string, data: unknown, config: IApiRequestConfig) {
-    return this.request({ method: 'post', url, data, ...config });
+    return this.request({ method: 'post', url, data, ...config })
   },
 
   patch(url: string, data: unknown, config: IApiRequestConfig) {
-    return this.request({ method: 'patch', url, data, ...config });
+    return this.request({ method: 'patch', url, data, ...config })
   },
 
   delete(url: string, config: IApiRequestConfig) {
-    return this.request({ method: 'delete', url, ...config });
+    return this.request({ method: 'delete', url, ...config })
   },
-};
+}

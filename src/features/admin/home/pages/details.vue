@@ -6,7 +6,7 @@
     </h1>
     <div v-if="apiHandle.isError.value" class="error mb-3">
       <p class="title">Error</p>
-      <p>{{ apiMsg }}</p>
+      <p class="">{{ apiMsg }}</p>
     </div>
     <template v-if="property">
       <div class="text-center">
