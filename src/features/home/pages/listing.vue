@@ -2,11 +2,7 @@
   <div>
     <header class="h-[calc(100vh-64px)] bg-slate-950 text-white">
       <div class="absolute inset-0 bg-red-50">
-        <img
-          :src="images[imgIdx].src"
-          :alt="images[imgIdx].alt"
-          class="h-full w-full object-cover"
-        />
+        <Slideshow v-model:currentIndex="imgIdx" class="h-full w-full" :images="images" />
         <div class="absolute inset-0 bg-gradient-to-r from-slate-950 to-transparent" />
       </div>
       <div class="c-container absolute inset-0 top-0 flex items-center px-3">
@@ -19,7 +15,10 @@
           @click="gotoNextImage"
         >
           <div
-            class="absolute left-4 top-1/2 flex -translate-x-[calc(8*0.25rem+2px)] -translate-y-1/2 items-center gap-x-3 transition-transform duration-300 group-hover:translate-x-0"
+            :class="[
+              'absolute left-4 top-1/2 flex -translate-y-1/2 items-center gap-x-3 transition-transform duration-300',
+              'group-hover:-translate-x-[calc(8*0.25rem+2px)] hover:translate-x-0',
+            ]"
           >
             <ArrowLongRightIcon class="h-5 w-5" />
             <ArrowLongRightIcon class="h-5 w-5" />
@@ -66,10 +65,7 @@
           <p>{{ apiMsg }}</p>
           <button class="btn mt-4" @click="getProperties">Retry</button>
         </div>
-        <div
-          v-else
-          class="c-container grid grid-cols-2 gap-4 p-3 md:grid-cols-3 lg:grid-cols-4"
-        >
+        <div v-else class="c-container grid grid-cols-2 gap-4 p-3 md:grid-cols-3 lg:grid-cols-4">
           <RouterLink
             v-for="property of properties"
             :key="`property-${property.id}`"
@@ -112,7 +108,7 @@ import { storeToRefs } from 'pinia'
 import { ArrowLongRightIcon, ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 import { useApiHandle } from '@/core/api/composables'
-import { AvatarImage, InputField } from '@/features/common/components'
+import { AvatarImage, InputField, Slideshow } from '@/features/common/components'
 
 import { usePropertiesStore } from '../store'
 
@@ -132,7 +128,7 @@ const images = [
 ]
 
 const imgIdx = ref(Math.floor(Math.random() * images.length))
-setInterval(gotoNextImage, 15000)
+// setInterval(gotoNextImage, 15000)
 
 function gotoNextImage() {
   imgIdx.value = (imgIdx.value + 1) % images.length
