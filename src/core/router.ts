@@ -9,7 +9,14 @@ import { errorsRoutes } from '@/features/errors/routes'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [...adminRoutes, ...authRoutes, ...homeRoutes, ...errorsRoutes],
+  routes: [
+		...adminRoutes,
+		...authRoutes,
+		...homeRoutes,
+
+		// Must always be last
+		...errorsRoutes,
+	],
 })
 
 router.beforeEach((to) => {
