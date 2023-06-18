@@ -1,21 +1,29 @@
 <template>
   <div>
-    <h2>Properties</h2>
+    <div class="mb-2 flex items-center justify-between">
+      <h2>Properties</h2>
+      <router-link
+        :to="{ name: 'admin-properties-add' }"
+        class="btn-icon flex items-center gap-x-2"
+      >
+        <PlusIcon class="h-5 w-5" />
+      </router-link>
+    </div>
     <DataTable
       :headers="[
         {
           text: 'Name',
-          value: 'name'
+          value: 'name',
         },
         {
           text: 'Price',
-          value: 'price'
+          value: 'price',
         },
         {
           text: 'createdAt',
           value: 'createdAt',
-          formatAsDate: true
-        }
+          formatAsDate: true,
+        },
       ]"
       :items="properties"
     >
@@ -45,6 +53,9 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+import { PlusIcon } from '@heroicons/vue/20/solid'
+
 import DataTable from '../../common/components/DataTable.vue'
 import AvatarImage from '../../common/components/AvatarImage.vue'
 
@@ -54,18 +65,18 @@ const properties = [
     image: 'https://picsum.photos/100/100',
     name: 'Sugushu Topi',
     price: '$300',
-    createdAt: new Date()
-  }
+    createdAt: new Date(),
+  },
 ]
 
 interface IPropertyJson {
-	title: string;
-	description: string;
-	price: number;
-	seller_id: number;
-	location: {
-		city: string;
-		neighborhood: string;
-	}
+  title: string
+  description: string
+  price: number
+  seller_id: number
+  location: {
+    city: string
+    neighborhood: string
+  }
 }
 </script>

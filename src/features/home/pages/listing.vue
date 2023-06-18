@@ -15,10 +15,12 @@
           <a href="#properties" class="btn mt-12 inline-block">View Properties</a>
         </div>
         <button
-          class="group relative aspect-square w-16 rounded-full overflow-hidden border border-white text-white backdrop-blur-sm"
+          class="group relative aspect-square w-16 overflow-hidden rounded-full border border-white text-white backdrop-blur-sm"
           @click="gotoNextImage"
         >
-          <div class="absolute left-4 -translate-x-[calc(8*0.25rem+2px)] top-1/2 transition-transform duration-300 flex items-center gap-x-3 group-hover:translate-x-0 -translate-y-1/2">
+          <div
+            class="absolute left-4 top-1/2 flex -translate-x-[calc(8*0.25rem+2px)] -translate-y-1/2 items-center gap-x-3 transition-transform duration-300 group-hover:translate-x-0"
+          >
             <ArrowLongRightIcon class="h-5 w-5" />
             <ArrowLongRightIcon class="h-5 w-5" />
           </div>
@@ -64,21 +66,24 @@
           <p>{{ apiMsg }}</p>
           <button class="btn mt-4" @click="getProperties">Retry</button>
         </div>
-        <div v-else class="c-container grid grid-cols-2 p-3 pt-24 md:grid-cols-3 lg:grid-cols-4">
+        <div v-else class="c-container grid grid-cols-2 p-3 pt-24 gap-4 md:grid-cols-3 lg:grid-cols-4">
           <div v-for="property of properties" :key="`property-${property.id}`">
             <div
               class="relative h-48 rounded-lg bg-gradient-to-b from-transparent from-40% to-primary/30 p-3"
             >
-              <img
-                class="absolute left-1/2 h-full w-[calc(100%-4*0.25rem)] -translate-x-1/2 -translate-y-6 rounded-lg object-cover shadow-lg"
+              <AvatarImage
                 :src="property.image"
-                :alt="property.title"
+                class="absolute left-1/2 h-full w-[calc(100%-4*0.25rem)] -translate-x-1/2 -translate-y-6 rounded-lg object-cover shadow-lg"
+                iconClass="w-20 h-20"
               />
             </div>
             <div class="mt-2">
-              <p class="text-lg opacity-60">{{ property.title }}</p>
-              <p>{{ property.price }}</p>
-              <button class="btn">Buy</button>
+              <div class="flex items-start justify-between">
+                <p class="">{{ property.title }}</p>
+                <p class="text-xl font-light"><span class="text-sm">$</span> {{ property.price }}</p>
+              </div>
+              <p class="truncate text-sm opacity-60">{{ property.description }}</p>
+              <button class="btn-text mx-auto mt-2 block">Purchase</button>
             </div>
           </div>
         </div>
@@ -93,7 +98,7 @@ import { storeToRefs } from 'pinia'
 import { ArrowLongRightIcon, ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 import { useApiHandle } from '@/core/api/composables'
-import { InputField } from '@/features/common/components'
+import { AvatarImage, InputField } from '@/features/common/components'
 
 import { usePropertiesStore } from '../store'
 
@@ -129,7 +134,7 @@ const maxPrice = ref(10000)
 getProperties()
 function getProperties() {
   store.retrieveAll({
-    page: 1,
+    page: 0,
     limit: 100,
   })
 }

@@ -23,3 +23,5 @@ const isAuthRoute = computed<boolean>(() => {
   return route == 'auth'
 })
 </script>
+
+<style lang="scss" scoped></style>

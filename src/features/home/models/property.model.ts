@@ -1,10 +1,11 @@
-import { IProperty, IPropertyJson } from './property.interface'
+import type { IProperty, IPropertyJson } from './property.interface'
 
 export default class Property implements IProperty {
   public id: number
   public title: string
   public description: string
   public price: string
+  public image: string
   public location: { city: string; neighbourhood: string }
 
   constructor(data: IProperty) {
@@ -13,6 +14,7 @@ export default class Property implements IProperty {
     this.description = data.description
     this.price = data.price
     this.location = data.location
+    this.image = data.image
   }
 
   static fromJson(json: IPropertyJson): Property {
@@ -21,7 +23,8 @@ export default class Property implements IProperty {
       title: json.title,
       description: json.description,
       price: json.price,
-      location: json.location
+      location: json.location,
+      image: json.image_url,
     })
   }
 }

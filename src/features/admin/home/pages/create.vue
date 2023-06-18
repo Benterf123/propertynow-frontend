@@ -1,5 +1,5 @@
 <template>
-  <div>Auth Routes</div>
+  <div>Create</div>
 </template>
 
 <script setup lang="ts"></script>
