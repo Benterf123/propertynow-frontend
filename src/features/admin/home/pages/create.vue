@@ -21,7 +21,7 @@
         <FormInputField label="Name" :field="name" />
         <FormInputField label="City" :field="city" />
         <FormInputField label="Neighbourhood" :field="neighbourhood" />
-        <FormInputField label="Price ($)" type="number" :field="price" />
+        <FormInputField label="Price ($)" type="number" min="200" :field="price" />
       </div>
       <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
         <FormTextField label="Description" type="textarea" :field="description" />
