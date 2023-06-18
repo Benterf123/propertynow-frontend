@@ -43,7 +43,6 @@ export const api = {
       }
     }
 		
-		console.log('Config:', config.headers)
     instance
       .request(config)
       .then((data: AxiosResponse) => {
