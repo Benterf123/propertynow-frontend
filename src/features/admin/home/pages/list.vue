@@ -27,6 +27,7 @@
         {
           text: 'Description',
           value: 'description',
+					itemClasses: 'line-clamp-1 leading-[2.125]'
         },
         {
           text: 'Price ($)',

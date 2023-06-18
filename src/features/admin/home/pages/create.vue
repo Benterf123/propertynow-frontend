@@ -1,30 +1,43 @@
 <template>
   <div>
-    <h1 class="text-xl mb-4">
-      <BackBtn> Add Property</BackBtn>
-    </h1>
-		<div v-if="apiHandle.isError.value" class="error mb-3">
-			<p class="title">Error</p>
-			<p class="">{{ apiMsg }}</p>
-		</div>
+    <div class="flex items-center justify-between">
+      <h1 class="mb-4 text-xl">
+        <BackBtn> Add Property</BackBtn>
+      </h1>
+      <button
+        v-if="(images.value.value?.length ?? 0) > 2"
+        class="btn sm:hidden"
+        @click="addProperty"
+      >
+        Add Property
+      </button>
+    </div>
+    <div v-if="apiHandle.isError.value" class="error mb-3">
+      <p class="title">Error</p>
+      <p class="">{{ apiMsg }}</p>
+    </div>
     <form class="space-y-3" @submit.prevent="addProperty">
-      <div class="grid grid-cols-3 gap-3">
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
         <FormInputField label="Name" :field="name" />
         <FormInputField label="City" :field="city" />
         <FormInputField label="Neighbourhood" :field="neighbourhood" />
-        <FormInputField label="Price" type="number" :field="price" />
+        <FormInputField label="Price ($)" type="number" :field="price" />
       </div>
-      <div class="grid grid-cols-2 gap-x-3">
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
         <FormTextField label="Description" type="textarea" :field="description" />
         <FormFileField
           label="Images"
           images-class="grid grid-cols-2 gap-3"
+          accept="image/*"
           :multiple="true"
           :field="images"
         />
       </div>
 
-      <button type="submit" :class="['btn !mt-4', { loading: apiHandle.isLoading.value }]">
+      <button
+        type="submit"
+        :class="['btn mx-auto !mt-4 block w-max', { loading: apiHandle.isLoading.value }]"
+      >
         Add Property
       </button>
     </form>
@@ -62,13 +75,13 @@ async function addProperty() {
   if (!form.validate()) return
 
   const payload: TPropertyAddPayload = {
-		title: name.value.value.value!,
-		description: description.value.value.value!,
-		price: price.value.value.value!,
-		city: city.value.value.value!,
-		neighborhood: neighbourhood.value.value.value!,
-		images: images.value.value.value!,
-	}
+    title: name.value.value.value!,
+    description: description.value.value.value!,
+    price: price.value.value.value!,
+    city: city.value.value.value!,
+    neighborhood: neighbourhood.value.value.value!,
+    images: images.value.value.value!,
+  }
   await store.addProperty(payload)
 }
 
