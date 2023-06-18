@@ -4,7 +4,8 @@ import HomeView from './index.vue'
 
 import PropertiesHome from './p-index.vue'
 import PropertiesList from './pages/list.vue'
-import PropertiesAdd from './pages/create.vue'
+import PropertyAdd from './pages/create.vue'
+import PropertyDetails from './pages/details.vue'
 
 export const adminHomeRoutes: RouteRecordRaw[] = [
   {
@@ -25,7 +26,12 @@ export const adminHomeRoutes: RouteRecordRaw[] = [
           {
             path: 'add',
             name: 'admin-properties-add',
-            component: PropertiesAdd,
+            component: PropertyAdd,
+          },
+          {
+            path: ':id',
+            name: 'admin-property-details',
+            component: PropertyDetails,
           },
         ],
       },

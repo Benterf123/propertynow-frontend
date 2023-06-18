@@ -1,12 +1,12 @@
 import type { IProperty, IPropertyJson } from './property.interface'
 
 export default class Property implements IProperty {
-  public id: number
+  public id: string
   public title: string
   public description: string
   public price: string
   public image: string
-  public location: { city: string; neighbourhood: string }
+  public location: { city: string; neighborhood: string }
 
   constructor(data: IProperty) {
     this.id = data.id
@@ -19,7 +19,7 @@ export default class Property implements IProperty {
 
   static fromJson(json: IPropertyJson): Property {
     return new Property({
-      id: json.id,
+      id: json._id,
       title: json.title,
       description: json.description,
       price: json.price,

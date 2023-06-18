@@ -1,7 +1,7 @@
 <template>
   <aside
     class="fixed left-0 top-0 h-screen w-screen duration-300 md:sticky md:h-screen md:w-[280px]"
-    :class="isMinimised ? 'pointer-events-none md:pointer-events-auto md:w-[68px]' : ''"
+    :class="isMinimised ? 'pointer-events-none md:pointer-events-auto md:w-[64px]' : ''"
   >
     <div
       class="fixed left-0 top-0 h-screen w-screen bg-slate-600/50 backdrop-blur-md transition-opacity duration-[inherit] md:hidden"

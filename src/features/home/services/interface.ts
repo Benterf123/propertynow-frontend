@@ -11,3 +11,5 @@ export interface IPropertiesParams {
 	neighborhood?: string;
 }
 export interface IPropertiesApiResponse extends IApiResponse<IPropertyJson[]> {}
+
+export interface IPropertyApiResponse extends IApiResponse<IPropertyJson> {}

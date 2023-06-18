@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 
 import TopNav from './common/components/nav/TopNav.vue'
@@ -21,6 +21,10 @@ const sidenavMinimised = ref(true || window.innerWidth <= 768)
 const isAuthRoute = computed<boolean>(() => {
   const route = useRouter().currentRoute.value.name
   return route == 'auth'
+})
+
+onMounted(() => {
+	document.documentElement.style.fontSize = '14px'
 })
 </script>
 

@@ -191,7 +191,7 @@ const props = withDefaults(
     pageSize?: number
     isPaginationLoading?: boolean
     hasGridLayout?: boolean
-    onItemClick?: (item: any) => void
+    onItemClick?: (item: T) => void
   }>(),
   {
     searchPlaceholder: 'Search item',

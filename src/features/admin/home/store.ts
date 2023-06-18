@@ -8,13 +8,21 @@ import { type IPropertiesParams, propertiesService } from '@/features/home/servi
 interface IState {
   propertiesApiStatus: IApiRequestStatus
   propertiesApiMsg: string
-  properties: Property[]
+  properties: Property[] | null
+
+  propertyApiStatus: IApiRequestStatus
+  propertyApiMsg: string
+  property: Property | null
 }
 
 const state = (): IState => ({
   propertiesApiStatus: IApiRequestStatus.Default,
   propertiesApiMsg: '',
-  properties: []
+  properties: [],
+
+  propertyApiStatus: IApiRequestStatus.Default,
+  propertyApiMsg: '',
+  property: null,
 })
 
 export const useAdminPropertiesStore = defineStore('propertiesStore', {
@@ -23,7 +31,7 @@ export const useAdminPropertiesStore = defineStore('propertiesStore', {
     async retrieveAll(params: IPropertiesParams) {
       try {
         this.propertiesApiStatus = IApiRequestStatus.Loading
-				this.propertiesApiMsg = ''
+        this.propertiesApiMsg = ''
 
         const response = await propertiesService.retrieveAll(params)
         this.properties = response.data.map((p) => Property.fromJson(p))
@@ -35,6 +43,29 @@ export const useAdminPropertiesStore = defineStore('propertiesStore', {
         const message = getErrorMessage(e)
         this.propertiesApiMsg = message
       }
-    }
-  }
+    },
+
+    async retrieveOne(id: string) {
+      try {
+				const property = this.properties?.find((p) => p.id === id)
+				if (property) {
+					this.property = property;
+					return;
+				}
+
+        this.propertyApiStatus = IApiRequestStatus.Loading
+        this.propertyApiMsg = ''
+
+        const response = await propertiesService.retrieveOne(id)
+        this.property = Property.fromJson(response.data)
+
+        this.propertyApiStatus = IApiRequestStatus.Success
+      } catch (e) {
+        this.propertyApiStatus = IApiRequestStatus.Error
+
+        const message = getErrorMessage(e)
+        this.propertyApiMsg = message
+      }
+    },
+  },
 })

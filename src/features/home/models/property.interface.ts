@@ -1,23 +1,23 @@
 export interface IPropertyJson {
-	id: number;
+	_id: string;
 	title: string;
 	description: string;
 	price: string;
 	image_url: string;
 	location: {
 		city: string;
-		neighbourhood: string;
+		neighborhood: string;
 	}
 }
 
 export interface IProperty {
-	id: number;
+	id: string;
 	title: string;
 	description: string;
 	price: string;
 	image: string;
 	location: {
 		city: string;
-		neighbourhood: string;
+		neighborhood: string;
 	}
 }
