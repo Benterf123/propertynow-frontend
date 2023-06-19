@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import { adminHomeRoutes } from './home/routes'
+import { adminLocationRoutes } from './locations/routes'
 
 import AdminView from './index.vue'
 import NotFound from '../errors/not-found.vue'
@@ -11,6 +12,9 @@ export const adminRoutes: RouteRecordRaw[] = [
     component: AdminView,
     children: [
       ...adminHomeRoutes,
+			...adminLocationRoutes,
+
+			// 404
       {
         path: ':to(.*)',
         component: NotFound,

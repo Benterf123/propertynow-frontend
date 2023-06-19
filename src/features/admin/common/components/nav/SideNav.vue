@@ -70,17 +70,17 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import {
-  HomeIcon as HomeOutlineIcon,
+	HomeIcon as HomeSolidIcon,
+	MapPinIcon as LocationSolidIcon,
   UserIcon as UserSolidIcon,
-  TrophyIcon as GamesSolidIcon,
   FlagIcon as TeamsSolidIcon,
   UserGroupIcon as PlayersSolidIcon
 } from '@heroicons/vue/24/solid'
 import {
-	HomeIcon as HomeSolidIcon,
+	HomeIcon as HomeOutlineIcon,
+	MapPinIcon as LocationOutlineIcon,
   ArrowLeftIcon,
   UserIcon as UserOutlineIcon,
-  TrophyIcon as GamesOutlineIcon,
   FlagIcon as TeamsOutlineIcon,
   UserGroupIcon as PlayersOutlineIcon,
   ChevronRightIcon
@@ -110,12 +110,12 @@ const routes: IRoute[] = [
     name: 'Properties',
     route: { name: 'admin-properties' }
   },
-  // {
-  //   icon: UserOutlineIcon,
-  //   selectedIcon: UserSolidIcon,
-  //   name: 'Users',
-  //   route: { name: 'users' }
-  // },
+  {
+    icon: LocationOutlineIcon,
+    selectedIcon: LocationSolidIcon,
+    name: 'Locations',
+    route: { name: 'admin-locations' }
+  },
   // {
   //   icon: GamesOutlineIcon,
   //   selectedIcon: GamesSolidIcon,

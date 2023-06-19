@@ -2,7 +2,7 @@ type TSortTypes = 'asc' | 'desc' | null;
 
 export interface IHeader<T> {
   text: string
-  value: keyof T
+  value: keyof T | string
   sort?: TSortTypes
   classes?: string
   itemClasses?: string
