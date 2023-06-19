@@ -40,8 +40,8 @@
 import { ref, Transition } from 'vue'
 import { ArrowLongLeftIcon } from '@heroicons/vue/24/outline'
 
-import Login from './components/Login.vue'
-import Signup from './components/Signup.vue'
+import Login from '../components/Login.vue'
+import Signup from '../components/Signup.vue'
 
 const isLogin = ref(true)
 const email = ref<string | null>(null)

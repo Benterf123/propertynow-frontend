@@ -10,7 +10,8 @@
       Login
     </button>
   </form>
-  <button class="loading w-max mx-auto mt-auto text-center text-primary" @click="gotoSignup">
+  <RouterLink :to="{ name: 'password-reset' }" class="inline-block mt-3 hover:text-primary transition-colors ">Reset Password</RouterLink>
+  <button class="loading mx-auto mt-auto w-max text-center text-primary" @click="gotoSignup">
     Signup Instead
   </button>
 </template>
