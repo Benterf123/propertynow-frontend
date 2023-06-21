@@ -1,9 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch, type UnwrapRef } from 'vue'
 import {
   IFormFieldState,
   type IFormField,
-  type IFormFieldConfig,
-  type TFormFieldValue,
   type TValidatorFn,
   type TValidators,
 } from './forms.interface'
@@ -54,6 +52,11 @@ export class FormField<T = any> implements IFormField<T> {
   reset(): void {
     this.value = ref(this._initialValue)
     this.errors.value = []
+  }
+
+  onInputChange(callback: (value: UnwrapRef<T | null>) => void): FormField {
+		watch(this.value, (v) => callback(v))
+    return this
   }
 
   private _resetErrors() {

@@ -5,14 +5,11 @@
         <h2>Locations</h2>
         <DotsLoader v-if="apiHandle.isLoading.value" />
       </div>
-      <router-link
-        :to="{ name: 'admin-properties-add' }"
-        class="btn-icon flex items-center gap-x-2"
-      >
-        <PlusIcon class="h-5 w-5" />
-      </router-link>
+      <AddLocation />
     </div>
-    <Status v-if="apiHandle.isError.value" variant="error">{{ apiMsg }}</Status>
+    <Status v-if="apiHandle.isError.value" variant="error" @retry="getLocations">
+      {{ apiMsg }}
+    </Status>
     <DataTable
       v-if="locations"
       :headers="[
@@ -22,19 +19,25 @@
         },
         {
           text: 'Neighborhoods',
-          value: 'neighborhoods.length',
+          value: 'neighborhoods',
           align: 'center',
         },
       ]"
       :items="locations"
-			:has-grid-layout="false"
-    />
+      :has-grid-layout="false"
+    >
+      <template #list-item-value="{ itemKey, value }">
+        <span v-if="itemKey === 'neighborhoods'">
+          {{ value.join(', ') }}
+        </span>
+        <template v-else> {{ value }}</template>
+      </template>
+    </DataTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { PlusIcon } from '@heroicons/vue/20/solid'
 
 import { useApiHandle } from '@/core/api/composables'
 import { Status, DotsLoader } from '@/features/common/components'
@@ -42,6 +45,7 @@ import { Status, DotsLoader } from '@/features/common/components'
 import { DataTable } from '@admin/common/components/table'
 
 import { useAdminLocationsStore } from '../store'
+import AddLocation from '../components/AddLocation.vue'
 
 const store = useAdminLocationsStore()
 const { locationsApiStatus: apiStatus, locationsApiMsg: apiMsg, locations } = storeToRefs(store)
@@ -52,3 +56,5 @@ function getLocations() {
   store.getLocations()
 }
 </script>
+
+<style scoped lang="scss"></style>

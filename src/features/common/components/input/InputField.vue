@@ -15,7 +15,7 @@
         ]"
         :min="min"
         :max="max"
-        @input="inputChange"
+				@input="(e) => inputChange(e as InputEvent)"
         :disabled="disabled"
       />
       <div
@@ -59,10 +59,10 @@ const props = withDefaults(
 )
 const emit = defineEmits<{
   (e: 'update:modelValue', data: string): void
-  (e: 'input', evt: Event): void
+  (e: 'input', evt: InputEvent): void
 }>()
 
-function inputChange(evt: Event) {
+function inputChange(evt: InputEvent) {
   const el = evt.target as HTMLInputElement
   const value = el.value
 

@@ -18,7 +18,7 @@ export const propertiesService = {
       api.post('/admin/properties/add', formData, {
         onSuccess: resolve,
         onError: reject,
-				isFormData: true,
+        isFormData: true,
       })
     })
   },

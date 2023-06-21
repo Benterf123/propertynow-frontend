@@ -1,20 +1,28 @@
-import { IApiRequestStatus } from '@/core/api'
+import { defineStore } from 'pinia'
 
+import { IApiRequestStatus } from '@/core/api'
+import { getErrorMessage } from '@/core/api/utils'
 import { propertiesService } from '@/features/common/service'
 import { LocationModel } from '@/features/common/models'
-import { defineStore } from 'pinia'
-import { getErrorMessage } from '@/core/api/utils'
+
+import { adminLocationService, type ILocationAddPayload } from './service'
 
 interface IState {
   locationsApiStatus: IApiRequestStatus
   locationsApiMsg: string
   locations: LocationModel[] | null
+
+  locationAddApiStatus: IApiRequestStatus
+  locationAddApiMsg: string
 }
 
 const state = (): IState => ({
   locationsApiStatus: IApiRequestStatus.Default,
   locationsApiMsg: '',
   locations: null,
+
+  locationAddApiStatus: IApiRequestStatus.Default,
+  locationAddApiMsg: '',
 })
 
 export const useAdminLocationsStore = defineStore('admin-locations', {
@@ -35,6 +43,21 @@ export const useAdminLocationsStore = defineStore('admin-locations', {
 
         const message = getErrorMessage(e)
         this.locationsApiMsg = message
+      }
+    },
+
+    async addLocation(payload: ILocationAddPayload) {
+      try {
+        ;(this.locationAddApiStatus = IApiRequestStatus.Loading), (this.locationAddApiMsg = '')
+
+        await adminLocationService.addLocation(payload)
+
+        this.locationAddApiStatus = IApiRequestStatus.Success
+      } catch (e) {
+        this.locationAddApiStatus = IApiRequestStatus.Error
+
+        const message = getErrorMessage(e)
+        this.locationAddApiMsg = message
       }
     },
   },
