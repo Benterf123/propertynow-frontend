@@ -1,8 +1,10 @@
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
-import IndexView from './index.vue'
 import { authRoutes } from './auth/routes'
 import { homeRoutes } from './home/routes'
+import { userRoutes } from './user/routes'
+
+import IndexView from './index.vue'
 
 export const buyerRoutes: RouteRecordRaw[] = [
   {
@@ -11,6 +13,7 @@ export const buyerRoutes: RouteRecordRaw[] = [
 		children: [
 			...authRoutes,
 			...homeRoutes,
+			...userRoutes,
 		]
   },
 ]

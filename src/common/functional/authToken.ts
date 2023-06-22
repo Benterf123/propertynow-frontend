@@ -29,11 +29,11 @@ export function removeAuthToken(category: TokenCategory): void {
   }
 }
 
-export function getUserID(category = TokenCategory.Access): number | null {
+export function getUserID(category = TokenCategory.Access): string | null {
   const token = retrieveAuthToken(category)
   if (!token) return null
 
-  return Number(JSON.parse(atob(token.split('.')[1])).sub)
+  return JSON.parse(atob(token.split('.')[1])).sub.id
 }
 
 export function isAuthTokenValid(offset = 0, token?: string): boolean {

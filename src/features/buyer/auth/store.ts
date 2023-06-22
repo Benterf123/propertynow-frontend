@@ -6,6 +6,7 @@ import { isAuthTokenValid, removeAuthToken, saveAuthToken } from '@/common/funct
 import { TokenCategory } from '@/common/constants'
 
 import { authService, type ILoginPayload, type ISignupPayload } from './services'
+import { useUserStore } from '../user/store'
 
 interface IState {
   loginApiStatus: IApiRequestStatus
@@ -69,8 +70,11 @@ export const useAuthStore = defineStore('auth-store', {
 			this.signupApiStatus = IApiRequestStatus.Default;
 			this.signupApiMsg = '';
 
+			const userStore = useUserStore()
+			userStore.reset()
+
 			removeAuthToken(TokenCategory.Access)
-			this.isUserAuthed = false;
+			this.isUserAuthed = false
 		}
   }
 })

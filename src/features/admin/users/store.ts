@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 
 import { IApiRequestStatus } from '@/core/api'
-
-import UserModel from './models/user.model'
-import { adminUserService, type IUsersParams } from './service'
 import { getErrorMessage } from '@/core/api/utils'
+import { UserModel } from '@/features/common/models'
+
+import { adminUserService, type IUsersParams } from './service'
 
 interface IState {
   usersApiStatus: IApiRequestStatus

@@ -5,13 +5,9 @@
       <ul class="flex items-center"></ul>
 
       <div class="flex items-center">
-        <button
-          v-if="isUserAuthed"
-          :class="['btn-text bg-transparent text-white', { loading: isLoggingOut }]"
-          @click="logout"
-        >
-          Logout
-        </button>
+        <RouterLink v-if="isUserAuthed" :to="{ name: 'profile' }">
+          <AvatarImage class="rounded-full bg-slate-50 p-3" />
+        </RouterLink>
         <RouterLink v-else :to="{ name: 'auth' }" class="btn">Login</RouterLink>
       </div>
     </div>
@@ -19,22 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import { delay } from '@/common/functional';
+import { AvatarImage } from '@/features/common/components'
+
 import { useAuthStore } from '../../auth/store'
 
 const store = useAuthStore()
 const { isUserAuthed } = storeToRefs(store)
 
-const isLoggingOut = ref(false)
-async function logout() {
-  isLoggingOut.value = true
-	
-	await delay(500);
-	store.logout()
 
-  isLoggingOut.value = false
-}
 </script>
