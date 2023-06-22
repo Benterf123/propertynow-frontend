@@ -1,6 +1,5 @@
 <template>
   <div class="">
-    <!-- {{ field.value.value }} -->
     <InputField
       v-model="value"
       :id="inputID"

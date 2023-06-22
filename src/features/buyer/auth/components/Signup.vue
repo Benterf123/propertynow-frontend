@@ -3,7 +3,7 @@
   <p v-if="apiHandle.isError.value" class="error mb-3 bg-red-50 first-letter:capitalize">
     {{ apiMsg }}
   </p>
-  <form @submit.prevent="signup" class="space-y-2">
+  <form class="space-y-2" @submit.prevent="signup">
     <div class="flex gap-x-4">
       <FormInputField label="First Name" class="dark" :field="firstName" />
       <FormInputField label="Last Name" class="dark" :field="lastName" />

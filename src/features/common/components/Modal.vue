@@ -51,7 +51,7 @@
 import { ref } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 
-const isOpen = ref(false)
+const isOpen = ref(true)
 defineProps<{ showTitle?: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 

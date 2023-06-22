@@ -2,19 +2,25 @@ import { IApiRequestStatus } from '@/core/api'
 
 import UserModel from './models/user.model'
 import { defineStore } from 'pinia'
-import { userService } from './service'
+import { userService, type TUserUpdatePayload } from './service'
 import { getErrorMessage } from '@/core/api/utils'
 
 interface IState {
   userApiStatus: IApiRequestStatus
   userApiMsg: string
   user: UserModel | null
+
+  userUpdateApiStatus: IApiRequestStatus
+  userUpdateApiMsg: string
 }
 
 const state = (): IState => ({
   userApiStatus: IApiRequestStatus.Default,
   userApiMsg: '',
   user: null,
+
+  userUpdateApiStatus: IApiRequestStatus.Default,
+  userUpdateApiMsg: '',
 })
 
 export const useUserStore = defineStore('user', {
@@ -43,7 +49,26 @@ export const useUserStore = defineStore('user', {
         this.userApiMsg = message
       }
     },
+    async updateProfile(payload: TUserUpdatePayload) {
+      try {
+        this.userUpdateApiStatus = IApiRequestStatus.Loading
+        this.userUpdateApiMsg = ''
 
+        const response = await userService.updateProfile(payload)
+        const data = response.data
+        this.user = UserModel.fromJson(data)
+
+        this.userUpdateApiStatus = IApiRequestStatus.Success
+      } catch (e) {
+        this.userUpdateApiStatus = IApiRequestStatus.Error
+
+        const message = getErrorMessage(e)
+        this.userUpdateApiMsg = message
+      }
+    },
+
+
+		// Reset
 		reset() {
 			this.userApiStatus = IApiRequestStatus.Default
 			this.userApiMsg = ''

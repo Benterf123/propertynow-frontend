@@ -1,6 +1,6 @@
 import { api } from '@/core/api'
 
-import type { TUserApiResponse } from './interface'
+import type { TUserApiResponse, TUserUpdatePayload, TUserUpdateApiResponse } from './interface'
 
 export const userService = {
   async getProfile() {
@@ -11,4 +11,12 @@ export const userService = {
       })
     })
   },
+	async updateProfile(payload: TUserUpdatePayload) {
+		return new Promise<TUserUpdateApiResponse>((resolve, reject) => {
+			api.post('/user/profile', payload, {
+				onSuccess: resolve,
+				onError: reject,
+			})
+		})
+	}
 }
