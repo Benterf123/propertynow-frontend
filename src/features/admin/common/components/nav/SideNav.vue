@@ -70,29 +70,29 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import {
-	HomeIcon as HomeSolidIcon,
-	MapPinIcon as LocationSolidIcon,
+  HomeIcon as HomeSolidIcon,
+  MapPinIcon as LocationSolidIcon,
   UserIcon as UserSolidIcon,
   FlagIcon as TeamsSolidIcon,
-  UserGroupIcon as PlayersSolidIcon
+  UserGroupIcon as PlayersSolidIcon,
 } from '@heroicons/vue/24/solid'
 import {
-	HomeIcon as HomeOutlineIcon,
-	MapPinIcon as LocationOutlineIcon,
-  ArrowLeftIcon,
+  HomeIcon as HomeOutlineIcon,
+  MapPinIcon as LocationOutlineIcon,
   UserIcon as UserOutlineIcon,
+  ArrowLeftIcon,
   FlagIcon as TeamsOutlineIcon,
   UserGroupIcon as PlayersOutlineIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
 } from '@heroicons/vue/24/outline'
 
 // import { UserAvatar } from "@/common/components";
 
 const props = withDefaults(defineProps<{ modelValue: boolean }>(), {
-  modelValue: true
+  modelValue: true,
 })
 const emit = defineEmits<{
-  (e: 'update:modelValue', minimised: boolean): void
+  'update:modelValue': [minimised: boolean]
 }>()
 
 const isMinimised = computed(() => props.modelValue)
@@ -108,20 +108,20 @@ const routes: IRoute[] = [
     icon: HomeOutlineIcon,
     selectedIcon: HomeSolidIcon,
     name: 'Properties',
-    route: { name: 'admin-properties' }
+    route: { name: 'admin-properties' },
   },
+	{
+		icon: UserOutlineIcon,
+		selectedIcon: UserSolidIcon,
+		name: 'Users',
+		route: { name: 'admin-users' }
+	},
   {
     icon: LocationOutlineIcon,
     selectedIcon: LocationSolidIcon,
     name: 'Locations',
-    route: { name: 'admin-locations' }
+    route: { name: 'admin-locations' },
   },
-  // {
-  //   icon: GamesOutlineIcon,
-  //   selectedIcon: GamesSolidIcon,
-  //   name: 'Games',
-  //   route: { name: 'games' }
-  // },
   // {
   //   icon: TeamsOutlineIcon,
   //   selectedIcon: TeamsSolidIcon,
