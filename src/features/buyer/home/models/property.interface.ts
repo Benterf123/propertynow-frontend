@@ -3,7 +3,7 @@ export interface IPropertyJson {
 	title: string;
 	description: string;
 	price: string;
-	image_url: string;
+	image_url: string[];
 	location: {
 		city: string;
 		neighborhood: string;

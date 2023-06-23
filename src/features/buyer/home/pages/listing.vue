@@ -162,8 +162,8 @@ const maxPrice = ref(1000000)
 getProperties()
 function getProperties() {
   store.retrieveAll({
-    page: 3,
-    limit: 3,
+    page: 1,
+    limit: 100,
   })
 }
 

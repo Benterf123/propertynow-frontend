@@ -24,7 +24,7 @@ export default class Property implements IProperty {
       description: json.description,
       price: json.price,
       location: json.location,
-      images: [json.image_url],
+      images: json.image_url,
     })
   }
 
