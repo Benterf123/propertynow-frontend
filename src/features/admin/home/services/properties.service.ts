@@ -1,6 +1,6 @@
 import { api } from '@/core/api'
 
-import type { IPropertyAddApiResponse, TPropertyAddPayload } from './interface'
+import type { IPropertyAddApiResponse, TPropertyAddPayload, TPropertyDeleteApiResponse } from './interface'
 
 export const propertiesService = {
   addProperty(payload: TPropertyAddPayload) {
@@ -22,4 +22,13 @@ export const propertiesService = {
       })
     })
   },
+
+	deleteProperty(id: string) {
+		return new Promise<TPropertyDeleteApiResponse>((resolve, reject) => {
+			api.delete(`/admin/properties/${id}/`, {
+				onSuccess: resolve,
+				onError: reject,
+			})
+		})
+	}
 }

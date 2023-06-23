@@ -1,9 +1,12 @@
 <template>
   <div>
-    <h1 class="mb-3 flex items-center gap-x-3">
-      <BackBtn>{{ property ? property.title : 'Property' }}</BackBtn>
-      <DotsLoader v-if="apiHandle.isLoading.value" />
-    </h1>
+    <div class="flex items-center justify-between">
+      <h1 class="mb-3 flex items-center gap-x-3">
+        <BackBtn>{{ property ? property.title : 'Property' }}</BackBtn>
+        <DotsLoader v-if="apiHandle.isLoading.value" />
+      </h1>
+      <DeleteProperty v-if="property" :property="property" />
+    </div>
     <div v-if="apiHandle.isError.value" class="error mb-3">
       <p class="title">Error</p>
       <p class="">{{ apiMsg }}</p>
@@ -39,6 +42,7 @@ import { DotsLoader } from '@/features/common/components'
 
 import BackBtn from '../../common/components/BackBtn.vue'
 import AvatarImage from '../../common/components/AvatarImage.vue'
+import DeleteProperty from '../components/DeleteProperty.vue'
 
 import { useAdminPropertiesStore } from '../store'
 

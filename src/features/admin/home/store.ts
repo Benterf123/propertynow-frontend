@@ -19,6 +19,9 @@ interface IState {
 
   propertyAddApiStatus: IApiRequestStatus
   propertyAddApiMsg: string
+
+  propertyDeleteApiStatus: IApiRequestStatus
+  propertyDeleteApiMsg: string
 }
 
 const state = (): IState => ({
@@ -32,6 +35,9 @@ const state = (): IState => ({
 
   propertyAddApiStatus: IApiRequestStatus.Default,
   propertyAddApiMsg: '',
+
+  propertyDeleteApiStatus: IApiRequestStatus.Default,
+  propertyDeleteApiMsg: '',
 })
 
 export const useAdminPropertiesStore = defineStore('propertiesStore', {
@@ -92,6 +98,25 @@ export const useAdminPropertiesStore = defineStore('propertiesStore', {
 
         const message = getErrorMessage(e)
         this.propertyAddApiMsg = message
+      }
+    },
+
+    async deleteProperty(id: string) {
+      try {
+        this.propertyDeleteApiStatus = IApiRequestStatus.Loading
+        this.propertyDeleteApiMsg = ''
+
+        await adminPropertiesService.deleteProperty(id)
+				const idx = this.properties?.findIndex((p) => p.id === id)
+				if (idx && idx > -1) 
+					this.properties!.splice(idx, 1);
+				
+        this.propertyDeleteApiStatus = IApiRequestStatus.Success
+      } catch (e) {
+        this.propertyDeleteApiStatus = IApiRequestStatus.Error
+
+        const message = getErrorMessage(e)
+        this.propertyDeleteApiMsg = message
       }
     },
   },
