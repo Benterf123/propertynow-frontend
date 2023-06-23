@@ -5,7 +5,7 @@
         <h2>Locations</h2>
         <DotsLoader v-if="apiHandle.isLoading.value" />
       </div>
-      <AddLocation />
+      <!-- <AddLocation /> -->
     </div>
     <Status v-if="apiHandle.isError.value" variant="error" @retry="getLocations">
       {{ apiMsg }}
