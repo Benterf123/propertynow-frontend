@@ -1,5 +1,5 @@
 import { api } from '@/core/api'
-import type { TUsersApiResponse, IUsersParams } from './interface'
+import type { TUsersApiResponse, TUserUpdatePayload, IUsersParams, TUserUpdateApiResponse } from './interface'
 
 export const adminUserService = {
   getUsers(params: IUsersParams) {
@@ -11,4 +11,13 @@ export const adminUserService = {
       })
     })
   },
+	
+	updateUser(id: string, payload: TUserUpdatePayload) {
+		return new Promise<TUserUpdateApiResponse>((resolve, reject) => {
+			api.post(`/admin/users/${id}/update`, payload, {
+				onSuccess: resolve,
+				onError: reject,
+			})
+		})
+	}
 }
